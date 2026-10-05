@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Ashritha — E · Ruby Scrapbook</title>
+<meta name="viewport" content="width=1440">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Gloock&family=Caveat:wght@500;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+@page{size:1440px 810px;margin:0}
+:root{
+  --ruby:#570300;--ruby2:#3F0200;--blood:#7A130E;
+  --lemon:#F7E493;--cream:#FBF4DF;--dcream:#F2DFAF;--blue:#C5D5E6;--gold:#C9B24F;--ink:#3A0A08;--paper:#FFFBF0;
+  --f-disp:"Bebas Neue",Impact,sans-serif;--f-serif:"Gloock",Georgia,serif;--f-hand:"Caveat",cursive;--f-body:"Hanken Grotesk",system-ui,sans-serif;
+}
+html{background:#1b0c0b;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{display:flex;flex-direction:column;align-items:center;gap:36px;padding:36px 0;font-family:var(--f-body)}
+@media print{html{background:none}body{gap:0;padding:0}}
+
+/* ---------- page shells ---------- */
+.page{width:1440px;height:810px;flex:none;position:relative;overflow:hidden;break-after:page;color:var(--ink)}
+.ruby{background-color:var(--ruby);color:var(--cream)}
+.deep{background-color:var(--ruby2);color:var(--cream)}
+.cream{background-color:var(--cream)}
+.dcream{background-color:var(--dcream)}
+.lemon{background-color:var(--lemon)}
+.blue{background-color:var(--blue)}
+.ruby,.deep{background-image:linear-gradient(rgba(247,228,147,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(247,228,147,.07) 1px,transparent 1px);background-size:40px 40px}
+.cream,.dcream,.lemon,.blue{background-image:linear-gradient(rgba(87,3,0,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(87,3,0,.08) 1px,transparent 1px);background-size:40px 40px}
+.inner{position:absolute;inset:0;padding:96px 104px 84px}
+.abs{position:absolute}
+.stripe{position:absolute;left:0;right:0;height:24px;z-index:5;background:repeating-linear-gradient(90deg,var(--gold) 0 28px,var(--cream) 28px 56px)}
+.stripe.t{top:0}.stripe.b{bottom:0}
+.stripe.r{background:repeating-linear-gradient(90deg,var(--ruby) 0 28px,var(--cream) 28px 56px)}
+
+/* ---------- type ---------- */
+h1,h2,h3{font-weight:400}
+h2{font-family:var(--f-disp);font-size:108px;line-height:.9;letter-spacing:.012em;text-transform:uppercase;color:var(--blue);margin:20px 0 0}
+.cream h2,.dcream h2,.lemon h2,.blue h2{color:var(--ruby)}
+h2 em{font-family:var(--f-hand);font-style:normal;font-weight:700;text-transform:none;color:var(--lemon);font-size:1.22em;letter-spacing:0;display:inline-block;line-height:.6;transform:rotate(-4deg);margin-left:.08em}
+.cream h2 em,.dcream h2 em,.lemon h2 em,.blue h2 em{color:var(--blood)}
+p{font-size:17px;line-height:1.6}
+.lead{font-size:19px;line-height:1.6}
+.hand{font-family:var(--f-hand);font-weight:700}
+.tag{display:inline-block;font:700 12px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;background:var(--lemon);color:var(--ruby);padding:9px 16px;transform:rotate(-2deg);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.cream .tag,.dcream .tag,.blue .tag,.lemon .tag{background:var(--ruby);color:var(--lemon)}
+
+/* ---------- scrapbook pieces ---------- */
+svg.st{position:absolute;fill:currentColor;overflow:visible}
+.c-lemon{color:var(--lemon)}.c-blue{color:var(--blue)}.c-gold{color:var(--gold)}.c-ruby{color:var(--ruby)}.c-cream{color:var(--cream)}.c-blood{color:var(--blood)}
+.pol{position:relative;background:var(--paper);padding:12px 12px 46px;box-shadow:0 16px 34px rgba(0,0,0,.34),0 2px 4px rgba(0,0,0,.2);transform:rotate(var(--r,0deg));color:var(--ruby)}
+.pol .cap{position:absolute;left:0;right:0;bottom:9px;text-align:center;font:700 24px/1 var(--f-hand);color:var(--ruby)}
+.ph{position:relative;background:#DCCBA6;color:var(--ruby);display:flex;align-items:flex-end;padding:10px 12px;overflow:hidden}
+.ph::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 13px,rgba(87,3,0,.09) 13px 14px)}
+.ph span{position:relative;font:600 10.5px/1.4 var(--f-body);letter-spacing:.12em;text-transform:uppercase}
+.ph.b{background:#B9CADC}
+.tape{position:absolute;width:104px;height:28px;top:-14px;left:50%;margin-left:-52px;transform:rotate(var(--tr,-4deg));z-index:3;
+  background:rgba(247,228,147,.9) radial-gradient(circle,rgba(87,3,0,.28) 2px,transparent 2.6px) 0 0/13px 13px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.tape.b{background-color:rgba(197,213,230,.92)}
+.tape.r{background-color:rgba(122,19,14,.9);background-image:radial-gradient(circle,rgba(247,228,147,.5) 2px,transparent 2.6px)}
+.clip{position:absolute;width:74px;height:82px;z-index:4;filter:drop-shadow(0 4px 4px rgba(0,0,0,.35))}
+.pclip{position:absolute;width:30px;height:76px;z-index:4;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3))}
+.note{position:relative;background:var(--paper);box-shadow:0 12px 26px rgba(0,0,0,.3);transform:rotate(var(--r,0deg));color:var(--ink);
+  background-image:linear-gradient(transparent 27px,rgba(110,140,185,.38) 28px);background-size:100% 28px;background-position:0 12px}
+.note::before{content:"";position:absolute;left:34px;top:0;bottom:0;width:2px;background:rgba(190,60,60,.45)}
+.sticky{position:relative;background:var(--lemon);color:var(--ruby);box-shadow:0 10px 20px rgba(0,0,0,.25);transform:rotate(var(--r,0deg));font:700 27px/1.15 var(--f-hand);padding:22px 24px}
+.sticker{display:inline-block;background:var(--ruby);color:var(--lemon);font:700 22px/1 var(--f-hand);padding:8px 18px 9px;border-radius:999px;transform:rotate(var(--r,-4deg));box-shadow:0 3px 8px rgba(0,0,0,.3);border:2px solid var(--lemon)}
+.sticker.l{background:var(--lemon);color:var(--ruby);border-color:var(--ruby)}
+.pill{display:inline-block;border:1.5px solid currentColor;border-radius:999px;padding:8px 18px;font:600 15px/1 var(--f-body)}
+.barcode{height:44px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 5px,transparent 5px 8px,var(--ink) 8px 11px,transparent 11px 13px,var(--ink) 13px 14px,transparent 14px 17px)}
+.folio{position:absolute;inset:0;pointer-events:none;z-index:6;font:600 11px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;opacity:.8}
+.folio span{position:absolute;bottom:36px}
+.folio .l{left:44px}.folio .r{right:44px}
+.cover .folio{display:none}
+
+/* ---------- 01 cover ---------- */
+.idcard{position:absolute;left:92px;top:112px;width:770px;height:520px;background:#F8EDBE;border-radius:24px;transform:rotate(-3deg);
+  box-shadow:0 26px 50px rgba(0,0,0,.45);color:var(--ruby)}
+.idcard::before{content:"";position:absolute;inset:10px;border:2px solid rgba(255,255,255,.75);border-radius:18px}
+.id-hey{position:absolute;left:56px;top:46px;font:700 38px/1 var(--f-hand);color:var(--blood)}
+.id-name{position:absolute;left:50px;top:78px;font:700 128px/1.05 var(--f-hand);color:var(--ruby);letter-spacing:-.01em}
+.id-k{position:absolute;left:58px;top:250px;font:400 52px/1.02 var(--f-serif);text-transform:uppercase;color:var(--ruby)}
+.id-sub{position:absolute;left:60px;top:392px;font:600 13px/1.6 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ruby)}
+.idcard .barcode{position:absolute;left:60px;bottom:40px;width:300px;background:repeating-linear-gradient(90deg,var(--ruby) 0 2px,transparent 2px 4px,var(--ruby) 4px 5px,transparent 5px 8px,var(--ruby) 8px 11px,transparent 11px 13px,var(--ruby) 13px 14px,transparent 14px 17px)}
+.idcard .pol{position:absolute;right:46px;top:54px;width:268px;--r:4deg;padding-bottom:48px}
+.idcard .pol .ph{height:340px}
+.cv-big{position:absolute;left:910px;top:96px;font:400 214px/.84 var(--f-disp);color:var(--blue);letter-spacing:.01em}
+.cv-meta{position:absolute;left:918px;top:480px;font:600 13px/1.8 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--lemon)}
+
+/* ---------- 02 about ---------- */
+.p02 .lp{position:absolute;left:0;top:0;bottom:0;width:560px;background-color:var(--ruby);background-image:linear-gradient(rgba(247,228,147,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(247,228,147,.07) 1px,transparent 1px);background-size:40px 40px}
+.p02 .lcopy{position:absolute;left:64px;top:84px;width:350px;color:var(--cream)}
+.hey{font:700 76px/1 var(--f-hand);color:var(--lemon);margin-top:22px}
+.hey b{display:block;font-weight:700;font-size:112px;line-height:.9;margin-left:-4px}
+.p02 .lead{font-size:17px;margin-top:26px}
+.traits{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.p02 .pol{position:absolute;left:446px;top:206px;width:310px;--r:-4deg}
+.p02 .pol .ph{height:380px}
+.letters{position:absolute;left:-19px;top:34px;display:flex;flex-direction:column;gap:5px;z-index:3}
+.letters span{width:36px;height:36px;border-radius:50%;background:var(--ruby);color:var(--cream);border:2px solid var(--cream);font:400 22px/32px var(--f-disp);text-align:center;box-shadow:0 2px 4px rgba(0,0,0,.3)}
+.profile{position:absolute;left:806px;top:150px;width:500px;padding:34px 38px 30px 60px;--r:1.6deg}
+.profile h3{font:400 34px/1 var(--f-serif);text-transform:uppercase;color:var(--ruby);margin-bottom:18px}
+.profile .row{display:grid;grid-template-columns:116px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid rgba(87,3,0,.22);font-size:15.5px;line-height:1.35}
+.profile .row b{font:700 11px/1.7 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--blood)}
+.p02 .snap{position:absolute;left:1232px;top:34px;width:176px;--r:8deg;padding-bottom:40px}
+.p02 .snap .ph{height:112px}
+
+
+.p02 .folio .l{color:var(--cream)}
+/* ---------- 03 story ---------- */
+.p03 .inner{padding-top:84px}
+.p03 h2{max-width:900px}
+.story-n{position:absolute;top:392px;width:436px;padding:20px 28px 22px 56px;font-size:16.5px;line-height:28px}
+.story-n p{font-size:16.5px;line-height:28px}
+.sn1{left:104px;--r:-1.2deg;top:392px}.sn2{left:578px;--r:1.2deg;top:412px}
+.p03 .pol{position:absolute;width:236px}
+.p03 .pol .ph{height:176px}
+.sp1{left:1086px;top:96px;--r:5deg}.sp2{left:1128px;top:396px;--r:-4deg}
+
+/* ---------- 04 education ---------- */
+.edu-l{position:absolute;left:104px;top:90px;width:660px}
+.edu-l .lead{margin-top:30px;max-width:620px}
+.chips-h{font:700 12px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--blood);margin:34px 0 16px}
+.chips{display:flex;flex-wrap:wrap;gap:12px}
+.chips span{background:var(--ruby);color:var(--lemon);font:700 22px/1 var(--f-hand);padding:9px 20px 10px;transform:rotate(var(--r,-2deg));box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.chips span:nth-child(2){--r:2deg;background:var(--blue);color:var(--ruby)}
+.chips span:nth-child(3){--r:-1deg}
+.chips span:nth-child(4){--r:3deg;background:var(--lemon);color:var(--ruby);box-shadow:0 3px 0 rgba(87,3,0,.3)}
+.edu-card{position:absolute;left:862px;top:104px;width:478px;height:604px;background:var(--ruby);color:var(--cream);border-radius:22px;padding:70px 44px 40px;transform:rotate(2.2deg);box-shadow:0 26px 48px rgba(0,0,0,.4)}
+.edu-card::before{content:"";position:absolute;inset:10px;border:2px solid rgba(247,228,147,.5);border-radius:16px;pointer-events:none}
+.edu-inst{font:400 62px/.95 var(--f-disp);letter-spacing:.02em;color:var(--lemon);text-transform:uppercase}
+.edu-deg{font:600 12.5px/1.6 var(--f-body);letter-spacing:.18em;text-transform:uppercase;margin-top:12px;opacity:.9}
+.edu-big{display:flex;align-items:baseline;gap:14px;margin:26px 0 18px;border-top:1px dashed rgba(247,228,147,.5);padding-top:20px}
+.edu-big b{font:400 152px/.85 var(--f-disp);color:var(--blue)}
+.edu-big span{font:700 22px/1 var(--f-hand);color:var(--lemon)}
+.edu-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;border-top:1px dashed rgba(247,228,147,.5);padding-top:18px}
+.edu-row b{display:block;font:400 54px/1 var(--f-disp);color:var(--lemon)}
+.edu-row span{font-size:13.5px;opacity:.85}
+.edu-card .barcode{position:absolute;left:44px;right:44px;bottom:34px;height:28px;background:repeating-linear-gradient(90deg,var(--cream) 0 2px,transparent 2px 4px,var(--cream) 4px 5px,transparent 5px 8px,var(--cream) 8px 11px,transparent 11px 13px,var(--cream) 13px 14px,transparent 14px 17px)}
+
+/* ---------- 05/06 internships ---------- */
+.xp .inner{padding:62px 104px 84px}
+.xp-take{position:absolute;right:104px;top:78px;width:340px;--r:2.5deg;font-size:25px;padding:20px 24px}
+.xp-take::before{content:"";position:absolute;top:-13px;left:50%;margin-left:-50px;width:100px;height:26px;background:rgba(197,213,230,.9);transform:rotate(-3deg)}
+.xp-cards{position:absolute;left:104px;right:104px;top:262px;display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.xcard{position:relative;background:var(--paper);color:var(--ink);padding:34px 36px 28px;box-shadow:0 18px 36px rgba(0,0,0,.35);transform:rotate(var(--r,0deg))}
+.xcard .pclip{left:36px;top:-30px}
+.xp-top{display:flex;justify-content:space-between;align-items:center}
+.burst-n{position:relative;width:70px;height:70px;margin:-6px 0 -4px -6px}
+.burst-n svg{position:absolute;inset:0;width:100%;height:100%;fill:var(--lemon)}
+.burst-n b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 30px/1 var(--f-disp);color:var(--ruby)}
+.xcard .dur{font:700 12px/1 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--ruby);border:1.5px solid var(--ruby);border-radius:999px;padding:7px 14px}
+.xcard h3{font:400 58px/1 var(--f-disp);letter-spacing:.015em;color:var(--ruby);text-transform:uppercase;margin:10px 0 4px}
+.role{font:700 12.5px/1.4 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--blood);margin-bottom:12px}
+.xcard p{font-size:15.5px;line-height:1.55}
+.learn{margin-top:16px;background:var(--lemon);padding:14px 18px 14px;transform:rotate(-.6deg);box-shadow:0 3px 0 rgba(87,3,0,.18)}
+.learn b{display:block;font:700 22px/1 var(--f-hand);color:var(--blood);margin-bottom:3px}
+.learn span{font-size:14.5px;line-height:1.45;color:var(--ink)}
+.lemon .xp-take{background:var(--ruby);color:var(--lemon)}
+.lemon .xcard{background:var(--ruby);color:var(--cream)}
+.lemon .xcard h3{color:var(--lemon)}
+.lemon .role{color:var(--blue)}
+.lemon .xcard .dur{color:var(--lemon);border-color:var(--lemon)}
+.lemon .burst-n svg{fill:var(--blue)}
+.lemon .learn{background:var(--cream)}
+.lemon .tag{background:var(--ruby);color:var(--lemon)}
+
+/* ---------- 07 project ---------- */
+.p07 .lh{position:absolute;left:0;top:0;bottom:0;width:720px;background-color:var(--ruby);background-image:linear-gradient(rgba(247,228,147,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(247,228,147,.07) 1px,transparent 1px);background-size:40px 40px;color:var(--cream)}
+.p07 .lcopy{position:absolute;left:104px;top:96px;width:540px}
+.p07 h2{font-size:100px;color:var(--blue)}.p07 h2 em{color:var(--lemon)}.p07 .lcopy .tag{background:var(--lemon);color:var(--ruby)}
+.p07 .q{font:400 25px/1.35 var(--f-serif);color:var(--cream);margin-top:38px;padding-left:22px;border-left:4px solid var(--lemon)}
+.p07 .rcol{position:absolute;left:776px;top:104px;width:560px;display:flex;flex-direction:column;gap:22px}
+.p07 .note{padding:20px 26px 20px 58px}
+.p07 .note b{display:block;font:700 26px/1 var(--f-hand);color:var(--blood);margin-bottom:2px}
+.p07 .note p{font-size:15px;line-height:28px}
+.p07 .n1{--r:-1deg}.p07 .n2{--r:.8deg}
+.p07 .row2{display:grid;grid-template-columns:1.25fr .75fr;gap:26px;align-items:start}
+.p07 .key{background:var(--ruby);color:var(--lemon);padding:22px 24px;transform:rotate(-1.4deg);box-shadow:0 12px 24px rgba(0,0,0,.3);position:relative}
+.p07 .key b{display:block;font:700 12px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.p07 .key p{font:400 20px/1.3 var(--f-serif);color:var(--cream)}
+.p07 .pol{--r:4deg;padding-bottom:40px}
+.p07 .pol .ph{height:118px}
+
+/* ---------- 08 art ---------- */
+.p08 .inner{padding-top:70px}
+.art-q{position:absolute;right:104px;top:98px;width:430px;font:700 31px/1.18 var(--f-hand);color:var(--lemon);transform:rotate(1.5deg)}
+.art-grid{position:absolute;left:104px;right:104px;top:272px;display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+.art-grid .pol{padding-bottom:54px}
+.art-grid .pol .ph{height:236px}
+.art-foot{position:absolute;left:104px;right:104px;top:672px;display:flex;align-items:center;gap:14px;font:600 14.5px/1 var(--f-body);color:var(--cream)}
+.art-foot i{flex:1;border-top:2px dashed rgba(247,228,147,.5)}
+.art-foot svg{width:16px;height:16px;fill:var(--lemon);flex:none}
+
+/* ---------- 09 beyond ---------- */
+.p09 h2{font-size:96px}
+.fold{position:absolute;top:462px;width:376px;height:262px}
+.fold .body{position:absolute;inset:0;background:var(--dcream) radial-gradient(circle,rgba(87,3,0,.16) 2.2px,transparent 2.8px) 0 0/22px 22px;border-radius:0 16px 16px 16px;box-shadow:0 14px 26px rgba(0,0,0,.22);padding:34px 28px 16px;z-index:2}
+.fold .body::before{content:"";position:absolute;left:0;top:-30px;width:150px;height:32px;background:var(--dcream);border-radius:12px 12px 0 0}
+.fold .body ul{list-style:none}
+.fold h3{position:absolute;left:14px;top:-30px;z-index:3;width:150px;text-align:center;font:700 26px/32px var(--f-hand);color:var(--ruby)}
+.fold li{font-size:15.5px;line-height:1.35;padding:10px 12px;margin-bottom:8px;background:var(--cream);border-left:4px solid var(--ruby);box-shadow:0 2px 4px rgba(0,0,0,.12)}
+.fold .pol{position:absolute;left:50%;top:-176px;width:210px;margin-left:-105px;z-index:1;padding-bottom:26px}
+.fold .pol .ph{height:140px}
+.f1{left:104px}.f2{left:532px}.f3{left:960px}
+.f1 .pol{--r:-4deg}.f2 .pol{--r:3deg}.f3 .pol{--r:-2deg}
+.f2 .body{background-color:var(--blue)}.f2 .body::before,.f2 h3{background:none}.f2 .body::before{background:var(--blue)}
+.f3 .body::before{background:var(--dcream)}
+
+/* ---------- 10 fine print ---------- */
+.p10 .inner{padding-top:84px}
+.facts{position:absolute;left:104px;right:104px;top:310px;display:grid;grid-template-columns:1fr 1fr;gap:44px 44px}
+.facts .note{padding:22px 30px 22px 96px;min-height:176px;display:flex;align-items:center}
+.facts .note::before{left:78px}
+.facts .note i{position:absolute;left:14px;top:12px;font:400 66px/1 var(--f-disp);color:var(--ruby);font-style:normal}
+.facts .note p{font:400 22px/28px var(--f-serif);color:var(--ink)}
+.facts .note:nth-child(1){--r:-1deg}.facts .note:nth-child(2){--r:.9deg}.facts .note:nth-child(3){--r:.7deg}.facts .note:nth-child(4){--r:-1.2deg}
+.facts .note .tape{width:90px;margin-left:-45px;top:-14px}
+
+/* ---------- 11 tools ---------- */
+.tools-l{position:absolute;left:104px;top:96px;width:560px}
+.sk{margin-top:38px}
+.sk b{display:block;font:700 12px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--blood);margin-bottom:12px}
+.sk div{display:flex;flex-wrap:wrap;gap:10px}
+.sk span{font:700 23px/1 var(--f-hand);padding:8px 18px 10px;border-radius:999px;background:var(--ruby);color:var(--lemon);transform:rotate(var(--r,0deg))}
+.sk.w span{background:transparent;color:var(--ruby);border:2px dashed var(--ruby)}
+.sk.t span{background:var(--lemon);color:var(--ruby);border:2px solid var(--ruby)}
+.sk span:nth-child(odd){--r:-1.5deg}.sk span:nth-child(even){--r:1.5deg}
+.certs{position:absolute;left:760px;top:78px;width:576px}
+.certs h4{font:400 40px/1 var(--f-disp);color:var(--ruby);letter-spacing:.02em;margin-bottom:22px;text-transform:uppercase}
+.cert{position:relative;display:flex;align-items:center;gap:22px;background:#F8EDBE;border-radius:14px;min-height:112px;padding:22px 26px 22px 62px;margin-bottom:22px;box-shadow:0 12px 24px rgba(87,3,0,.25);transform:rotate(var(--r,0deg))}
+.cert::before{content:"";position:absolute;left:22px;top:50%;margin-top:-10px;width:20px;height:20px;border-radius:50%;background:var(--cream);box-shadow:inset 0 2px 3px rgba(0,0,0,.35)}
+.cert::after{content:"";position:absolute;right:150px;top:10px;bottom:10px;border-left:2px dashed rgba(87,3,0,.35)}
+.cert span{flex:1;font:400 25px/1.1 var(--f-serif);color:var(--ruby);padding-right:18px}
+.cert b{width:104px;flex:none;text-align:center;font:700 12px/1.3 var(--f-body);letter-spacing:.16em;text-transform:uppercase;color:var(--blood)}
+.cert:nth-of-type(1){--r:-1deg}.cert:nth-of-type(2){--r:.8deg}.cert:nth-of-type(3){--r:-.6deg}.cert:nth-of-type(4){--r:1deg}
+
+/* ---------- 12 values ---------- */
+.val-l{position:absolute;left:104px;top:84px;width:600px}
+.val-l .lead{margin-top:32px;font-size:18px}
+.vals{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.vals span{background:var(--lemon);color:var(--ruby);font:700 23px/1 var(--f-hand);padding:8px 20px 10px;border-radius:999px;transform:rotate(var(--r,-2deg))}
+.vals span:nth-child(2){--r:2deg;background:var(--blue)}.vals span:nth-child(3){--r:-1deg;background:var(--dcream)}.vals span:nth-child(4){--r:2.5deg}
+.ms-h{position:absolute;left:770px;top:84px}
+.ms{position:absolute;left:760px;top:140px;width:580px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px 8px}
+.ms div{text-align:center}
+.bw{position:relative;width:186px;height:186px;margin:0 auto 4px;transform:rotate(var(--r,0deg))}
+.bw svg{position:absolute;inset:0;width:100%;height:100%;fill:var(--c,var(--lemon));filter:drop-shadow(0 6px 8px rgba(0,0,0,.3))}
+.bw b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 58px/1 var(--f-disp);color:var(--ruby);letter-spacing:.01em}
+.bw b.s{font-size:40px}
+.ms span{display:block;font-size:14px;line-height:1.35;color:var(--cream);max-width:170px;margin:0 auto}
+
+/* ---------- 13 future ---------- */
+.fut-l{position:absolute;left:104px;top:84px;width:760px}
+.fut-l .lead{margin-top:34px;max-width:700px}
+.p13 .pol{position:absolute;left:1060px;top:84px;width:256px;--r:4deg}
+.p13 .pol .ph{height:240px}
+.path{position:absolute;left:104px;right:104px;top:500px;list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.path::before{content:"";position:absolute;left:30px;right:30px;top:30px;border-top:3px dashed rgba(247,228,147,.6)}
+.path li{position:relative;padding-top:92px}
+.path .n{position:absolute;top:0;left:0;width:62px;height:62px;border-radius:50%;background:var(--paper);color:var(--ruby);font:400 32px/62px var(--f-disp);text-align:center;box-shadow:0 5px 10px rgba(0,0,0,.3)}
+.path li:last-child .n{background:var(--lemon)}
+.path b{display:block;font:400 46px/1 var(--f-disp);color:var(--blue);letter-spacing:.015em;text-transform:uppercase}
+.path span.d{display:block;font-size:15.5px;line-height:1.45;margin-top:8px;color:var(--cream)}
+
+/* ---------- 14 contact ---------- */
+.ct-l{position:absolute;left:104px;top:78px;width:800px}
+.ct-l h2{font-size:156px;line-height:.86;margin-top:22px}
+.ct-list{margin-top:44px;width:640px}
+.ct-list div{display:grid;grid-template-columns:132px 1fr;align-items:center;padding:13px 0;border-top:2px dashed rgba(247,228,147,.4);font-size:20px}
+.ct-list div:last-child{border-bottom:2px dashed rgba(247,228,147,.4)}
+.ct-list b{font:700 12px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--lemon)}
+.p14 .pol{position:absolute;left:996px;top:96px;width:332px;--r:4deg}
+.p14 .pol .ph{height:410px}
+.p14 .sign{position:absolute;left:940px;top:582px;font:700 112px/1 var(--f-hand);color:var(--lemon);transform:rotate(-6deg)}
+</style></head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="star" viewBox="0 0 100 100"><path d="M50 2C54 34 66 46 98 50C66 54 54 66 50 98C46 66 34 54 2 50C34 46 46 34 50 2Z"/></symbol>
+  <symbol id="burst" viewBox="0 0 100 100"><polygon points="50.0,2.0 58.5,18.1 74.0,8.4 73.3,26.7 91.6,26.0 81.9,41.5 98.0,50.0 81.9,58.5 91.6,74.0 73.3,73.3 74.0,91.6 58.5,81.9 50.0,98.0 41.5,81.9 26.0,91.6 26.7,73.3 8.4,74.0 18.1,58.5 2.0,50.0 18.1,41.5 8.4,26.0 26.7,26.7 26.0,8.4 41.5,18.1"/></symbol>
+  <symbol id="squig" viewBox="0 0 80 60"><path d="M8 44C6 12 52 6 54 32C56 52 22 54 26 34C29 20 48 24 44 36" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M52 50C62 56 72 52 76 42M76 42L68 44M76 42L74 52" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="binder" viewBox="0 0 100 110">
+    <defs><linearGradient id="metal" x1="0" x2="1"><stop offset="0" stop-color="#f1f2f5"/><stop offset=".5" stop-color="#b9bcc4"/><stop offset="1" stop-color="#878b94"/></linearGradient></defs>
+    <path d="M30 52C4 38 6 3 36 3L64 3C94 3 96 38 70 52" fill="none" stroke="#8d9097" stroke-width="7" stroke-linecap="round"/>
+    <path d="M30 52C4 38 6 3 36 3L64 3C94 3 96 38 70 52" fill="none" stroke="#e4e6ea" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M8 108L24 50Q26 43 34 43L66 43Q74 43 76 50L92 108Z" fill="url(#metal)" stroke="#6f737b" stroke-width="2"/>
+    <path d="M24 100L34 56" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="pclip" viewBox="0 0 40 100"><path d="M29 20L29 78C29 94 8 94 8 78L8 14C8 3 23 3 23 14L23 72" fill="none" stroke="#a9adb5" stroke-width="4" stroke-linecap="round"/><path d="M29 20L29 78C29 94 8 94 8 78L8 14C8 3 23 3 23 14L23 72" fill="none" stroke="#f1f2f5" stroke-width="1.4" stroke-linecap="round" transform="translate(-.8 -.8)"/></symbol>
+</defs></svg>
+
+<!-- ============ 01 COVER ============ -->
+<section class="page ruby cover" data-page="1">
+  <div class="stripe t"></div><div class="stripe b"></div>
+
+  <div class="idcard">
+    <svg class="clip" style="left:348px;top:-52px" viewBox="0 0 100 110"><use href="#binder"/></svg>
+    <div class="id-hey">Hey, I'm</div>
+    <div class="id-name">Ashritha</div>
+    <div class="id-k">Creative<br>Portfolio</div>
+    <div class="id-sub">Marketing · Creativity<br>Commerce</div>
+    <div class="barcode"></div>
+    <figure class="pol"><div class="ph"><span>PHOTO · Portrait, looking into camera</span></div><span class="cap">class of 2027</span></figure>
+    <svg class="st c-ruby" style="right:28px;bottom:34px;width:64px;height:64px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  </div>
+
+  <div class="cv-big">PORT<br>FOLIO</div>
+  <div class="cv-meta">[ 2026 ] &nbsp;·&nbsp; B.Com Marketing<br>Greenfield University</div>
+
+  <svg class="st c-lemon" style="left:1290px;top:54px;width:110px;height:110px;transform:rotate(12deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-blue" style="left:866px;top:548px;width:92px;height:92px;transform:rotate(-10deg)" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <svg class="st c-lemon" style="left:1180px;top:560px;width:84px;height:62px;stroke:none" viewBox="0 0 80 60"><use href="#squig"/></svg>
+  <svg class="st c-blue" style="left:1290px;top:620px;width:60px;height:60px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <svg class="st c-lemon" style="left:52px;top:664px;width:70px;height:70px" viewBox="0 0 100 100"><use href="#burst"/></svg>
+</section>
+
+<!-- ============ 02 ABOUT ============ -->
+<section class="page dcream p02" data-page="2">
+  <div class="lp"></div>
+  <div class="lcopy">
+    <div class="tag">About me</div>
+    <div class="hey">Hey, I'm <b>Ashritha</b></div>
+    <p class="lead">I'm a curious, big-ideas person who learns best by making things. I grew up filling sketchbooks and running school fests, and I'm now finishing a B.Com in Marketing. Somewhere between the two I found my lane: brands that feel like someone made them on purpose.</p>
+    <div class="traits"><span class="sticker l" style="--r:-3deg">curious</span><span class="sticker" style="--r:2deg">creative</span><span class="sticker l" style="--r:-1deg">thorough</span></div>
+  </div>
+
+  <figure class="pol">
+    <svg class="clip" style="left:118px;top:-56px" viewBox="0 0 100 110"><use href="#binder"/></svg>
+    <div class="ph"><span>PHOTO · Full-length, candid / movement</span></div>
+    <span class="cap">creative mode</span>
+    <div class="letters"><span>A</span><span>S</span><span>H</span><span>R</span><span>I</span><span>T</span><span>H</span><span>A</span></div>
+  </figure>
+
+  <div class="profile note">
+    <div class="tape r" style="left:60%"></div>
+    <h3>Student profile</h3>
+    <div class="row"><b>Studying</b><span>B.Com (Marketing), Class of 2027</span></div>
+    <div class="row"><b>Based in</b><span>Bengaluru, India</span></div>
+    <div class="row"><b>Loves</b><span>Branding, content, packaging, stationery</span></div>
+    <div class="row"><b>Languages</b><span>English, Hindi, Kannada</span></div>
+    <div class="row"><b>Tools</b><span>Canva, Figma, Excel, Procreate</span></div>
+    <div class="row"><b>Next</b><span>A master's in Marketing &amp; Creativity</span></div>
+    <div class="row" style="border:0"><b>Available</b><span>Summer 2026, remote or on-site</span></div>
+  </div>
+  <figure class="pol snap"><div class="tape b" style="--tr:5deg"></div><div class="ph"><span>PHOTO · Desk / sketchbook</span></div></figure>
+  <div class="sticky abs" style="left:836px;top:648px;width:268px;--r:-3deg;font-size:25px">figuring it out as I go, one idea at a time ✦</div>
+  <svg class="st c-ruby" style="left:1262px;top:560px;width:96px;height:96px;transform:rotate(10deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-blood" style="left:1146px;top:650px;width:56px;height:56px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <div class="folio"><span class="l">(02) · Ashritha</span><span class="r">02 / 14</span></div>
+</section>
+
+<!-- ============ 03 STORY ============ -->
+<section class="page ruby p03" data-page="3">
+  <div class="stripe t"></div><div class="stripe b"></div>
+  <div class="inner">
+    <div class="tag">My story</div>
+    <h2>The art kid who chose <em>commerce</em></h2>
+  </div>
+  <div class="story-n note sn1"><div class="tape" style="--tr:-3deg;left:30%"></div><p>Growing up, art was my language. Calligraphy, doodles, clay, collage: I spent countless hours getting each one right. I started an Instagram page to share my work, and as it grew I hosted a giveaway and organised a small paint party. Maths was my favourite subject all the way through, and I finished Class 12 with 93.2%.</p></div>
+  <div class="story-n note sn2"><div class="tape b" style="--tr:3deg;left:70%"></div><p>When it was time to choose, self-doubt won and I picked a B.Com over design. I don't regret it. I met incredible people and kept a 3.6 GPA. But every internship pulled me back to the thing I loved first. Now I want to bring both halves together, starting with a master's in Marketing &amp; Creativity.</p></div>
+  <figure class="pol sp1"><div class="tape b" style="--tr:-6deg"></div><div class="ph"><span>PHOTO · Childhood art / sketchbook</span></div><span class="cap">age 9, obsessed</span></figure>
+  <figure class="pol sp2"><div class="tape" style="--tr:5deg"></div><div class="ph b"><span>PHOTO · Paint party</span></div><span class="cap">the paint party</span></figure>
+  <svg class="st c-lemon" style="left:960px;top:96px;width:84px;height:84px;transform:rotate(14deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-blue" style="left:1050px;top:620px;width:80px;height:80px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <div class="folio"><span class="l">(03) · Ashritha</span><span class="r">03 / 14</span></div>
+</section>
+
+<!-- ============ 04 EDUCATION ============ -->
+<section class="page cream p04" data-page="4">
+  <div class="edu-l">
+    <div class="tag">Education</div>
+    <h2>Learning by <em>doing</em></h2>
+    <p class="lead">I'm a hands-on learner. Art trained me to notice the details others miss, and I think best out loud, talking ideas through and asking for help when I need it. With a business family at home, I can't help asking one more question of every idea: could this actually work in the market?</p>
+    <div class="chips-h">Subjects I loved</div>
+    <div class="chips"><span>Brand Management</span><span>Consumer Behaviour</span><span>Digital Marketing</span><span>Design Thinking</span></div>
+  </div>
+  <div class="edu-card">
+    <svg class="clip" style="left:200px;top:-56px" viewBox="0 0 100 110"><use href="#binder"/></svg>
+    <div class="edu-inst">Greenfield<br>University</div>
+    <div class="edu-deg">Bachelor of Commerce · 2024 — 2027</div>
+    <div class="edu-big"><b>3.6</b><span>GPA, and counting</span></div>
+    <div class="edu-row"><div><b class="s">93.2%</b><span>Class XII</span></div><div><b>91.0%</b><span>Class X</span></div></div>
+    <div class="barcode"></div>
+  </div>
+  <svg class="st c-blood" style="left:800px;top:640px;width:84px;height:84px;transform:rotate(8deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-ruby" style="left:1330px;top:84px;width:56px;height:56px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <div class="folio"><span class="l" style="color:var(--ruby)">(04) · Ashritha</span><span class="r" style="color:var(--ruby)">04 / 14</span></div>
+</section>
+
+<!-- ============ 05 INTERNSHIPS 01-02 ============ -->
+<section class="page ruby xp" data-page="5">
+  <div class="stripe t"></div><div class="stripe b"></div>
+  <div class="inner"><div class="tag">Internships · 01—02</div><h2>The numbers <em>chapter</em></h2></div>
+  <div class="sticky xp-take">I liked the finance. I just didn't want to do accounts every day, and finding that out early was worth it.</div>
+  <div class="xp-cards">
+    <article class="xcard" style="--r:-.8deg">
+      <svg class="pclip" viewBox="0 0 40 100"><use href="#pclip"/></svg>
+      <div class="xp-top"><div class="burst-n"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>01</b></div><span class="dur">1 month</span></div>
+      <h3>Northwind Finserv</h3>
+      <div class="role">Finance &amp; Operations Intern</div>
+      <p>Handled KYC verification and supported the loan processing team at an NBFC, and spent a week alongside HR.</p>
+      <div class="learn"><b>what it taught me</b><span>How an NBFC runs, and that I'd rather work with people than only a screen.</span></div>
+    </article>
+    <article class="xcard" style="--r:.8deg">
+      <svg class="pclip" viewBox="0 0 40 100"><use href="#pclip"/></svg>
+      <div class="xp-top"><div class="burst-n"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>02</b></div><span class="dur">2 months</span></div>
+      <h3>Orchid Capital</h3>
+      <div class="role">Research &amp; Finance Intern</div>
+      <p>Verified bank documents, prepared debit notes, assisted with asset valuation and supported GST filings.</p>
+      <div class="learn"><b>what it taught me</b><span>How a corporate works: every action checked at several levels, discipline as the default.</span></div>
+    </article>
+  </div>
+  <div class="folio"><span class="l">(05) · Ashritha</span><span class="r">05 / 14</span></div>
+</section>
+
+<!-- ============ 06 INTERNSHIPS 03-04 ============ -->
+<section class="page lemon xp" data-page="6">
+  <div class="stripe t r"></div><div class="stripe b r"></div>
+  <div class="inner"><div class="tag">Internships · 03—04</div><h2>The creative <em>chapter</em></h2></div>
+  <div class="sticky xp-take">This is where it clicked. Ideas, design and execution felt less like work and more like me.</div>
+  <div class="xp-cards">
+    <article class="xcard" style="--r:.8deg">
+      <svg class="pclip" viewBox="0 0 40 100"><use href="#pclip"/></svg>
+      <div class="xp-top"><div class="burst-n"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>03</b></div><span class="dur">3 months</span></div>
+      <h3>Bloom &amp; Co.</h3>
+      <div class="role">Marketing Intern</div>
+      <p>Planned social content, designed event posters, wrote campaign captions and got a first look at merchandising.</p>
+      <div class="learn"><b>what it taught me</b><span>Coming up with ideas that don't exist yet was the hardest part, and my favourite.</span></div>
+    </article>
+    <article class="xcard" style="--r:-.8deg">
+      <svg class="pclip" viewBox="0 0 40 100"><use href="#pclip"/></svg>
+      <div class="xp-top"><div class="burst-n"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>04</b></div><span class="dur">3 months</span></div>
+      <h3>Pixel Parade Media</h3>
+      <div class="role">Creative Marketing Intern</div>
+      <p>Ran social campaigns, organised shoots, reviewed content and reached out to new clients.</p>
+      <div class="learn"><b>what it taught me</b><span>Timelines and cold calls are tough. It's also the role that made me sure about marketing.</span></div>
+    </article>
+  </div>
+  <div class="folio"><span class="l" style="color:var(--ruby)">(06) · Ashritha</span><span class="r" style="color:var(--ruby)">06 / 14</span></div>
+</section>
+
+<!-- ============ 07 PROJECT ============ -->
+<section class="page cream p07" data-page="7">
+  <div class="lh"></div>
+  <div class="lcopy">
+    <div class="tag">Research project · Consumer behaviour</div>
+    <h2>Does a good story sell a good <em>snack?</em></h2>
+    <p class="q">How does brand storytelling on social media shape Gen Z's trust in new D2C snack brands in India?</p>
+  </div>
+  <svg class="st c-lemon" style="left:560px;top:580px;width:92px;height:92px;transform:rotate(10deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-blue" style="left:90px;top:660px;width:70px;height:70px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <div class="rcol">
+    <div class="note n1"><b>why this question</b><p>Gen Z follows founders before they buy products. I wanted to know whether a story can earn trust a label can't, and how new snack brands use it to break through.</p></div>
+    <div class="note n2"><b>how I approached it</b><p>A structured survey of Gen Z shoppers on what they notice, trust and share, rather than relying on secondary data or assumptions.</p></div>
+    <div class="row2">
+      <div class="key"><b>Key insight</b><p>People don't buy for one reason. Story, look and social proof pull on the decision as much as taste does.</p></div>
+      <figure class="pol"><div class="tape b"></div><div class="ph"><span>VISUAL · Survey chart</span></div></figure>
+    </div>
+  </div>
+  <div class="folio"><span class="l" style="color:var(--cream)">(07) · Ashritha</span><span class="r" style="color:var(--ruby)">07 / 14</span></div>
+</section>
+
+<!-- ============ 08 ART ============ -->
+<section class="page deep p08" data-page="8">
+  <div class="inner">
+    <div class="tag">Creative practice</div>
+    <h2>Where I let <em>go</em></h2>
+  </div>
+  <p class="art-q">I like control over everything I work on. Painting is the one place I don't. That's where the ideas just flow.</p>
+  <div class="art-grid">
+    <figure class="pol" style="--r:-3deg"><div class="tape"></div><div class="ph"><span>ARTWORK</span></div><span class="cap">calligraphy</span></figure>
+    <figure class="pol" style="--r:2deg;margin-top:16px"><div class="tape b" style="--tr:4deg"></div><div class="ph b"><span>ARTWORK</span></div><span class="cap">painting</span></figure>
+    <figure class="pol" style="--r:-1.5deg"><div class="tape"></div><div class="ph"><span>ARTWORK</span></div><span class="cap">illustration</span></figure>
+    <figure class="pol" style="--r:3deg;margin-top:14px"><div class="tape r"></div><div class="ph b"><span>ARTWORK</span></div><span class="cap">clay</span></figure>
+    <figure class="pol" style="--r:-2.5deg"><div class="tape b"></div><div class="ph"><span>ARTWORK</span></div><span class="cap">collage</span></figure>
+    <figure class="pol" style="--r:2deg;margin-top:12px"><div class="tape"></div><div class="ph b"><span>ARTWORK</span></div><span class="cap">packaging doodles</span></figure>
+  </div>
+  <div class="art-foot"><span>Started an art page on Instagram</span><i></i><svg viewBox="0 0 100 100"><use href="#star"/></svg><span>Grew an audience</span><i></i><svg viewBox="0 0 100 100"><use href="#star"/></svg><span>Hosted a giveaway</span><i></i><svg viewBox="0 0 100 100"><use href="#star"/></svg><span>Organised a paint party</span></div>
+  <svg class="st c-lemon" style="left:660px;top:60px;width:70px;height:70px;transform:rotate(14deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <div class="folio"><span class="l">(08) · Ashritha</span><span class="r">08 / 14</span></div>
+</section>
+
+<!-- ============ 09 BEYOND ============ -->
+<section class="page cream p09" data-page="9">
+  <div class="inner"><div class="tag">Beyond the classroom</div><h2>Off the <em>page</em></h2></div>
+  <div class="fold f1">
+    <figure class="pol"><div class="tape"></div><div class="ph"><span>PHOTO · Club / NGO event</span></div></figure>
+    <div class="body"><h3>community</h3><ul><li>Media &amp; marketing club, 2 years</li><li>Student-led non-profit, 2 years</li><li>Organic farming NGO, 3 months</li></ul></div>
+  </div>
+  <div class="fold f2">
+    <figure class="pol"><div class="tape b"></div><div class="ph b"><span>PHOTO · Tennis / gym / dance</span></div></figure>
+    <div class="body"><h3>discipline</h3><ul><li>Learnt tennis from scratch at university</li><li>5 years of dance, 4 of badminton</li><li>Lifelong swimmer, gym most days</li></ul></div>
+  </div>
+  <div class="fold f3">
+    <figure class="pol"><div class="tape r"></div><div class="ph"><span>PHOTO · Surf / trek / scuba</span></div></figure>
+    <div class="body"><h3>adventure</h3><ul><li>Surfing with friends in Gokarna</li><li>Trekking the Himalayas with my brother</li><li>Open-water scuba with my dad</li></ul></div>
+  </div>
+  <svg class="st c-blood" style="left:760px;top:96px;width:80px;height:80px;transform:rotate(12deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <div class="folio"><span class="l" style="color:var(--ruby)">(09) · Ashritha</span><span class="r" style="color:var(--ruby)">09 / 14</span></div>
+</section>
+
+<!-- ============ 10 FINE PRINT ============ -->
+<section class="page blue p10" data-page="10">
+  <div class="inner"><div class="tag">Fine print</div><h2>Things you should <em>know</em></h2></div>
+  <div class="facts">
+    <div class="note"><div class="tape"></div><i>01</i><p>I cross-check everything a million times before I go ahead. I rarely take things at face value.</p></div>
+    <div class="note"><div class="tape r"></div><i>02</i><p>I read obsessively about random, real-world topics. Fiction? Not really my thing.</p></div>
+    <div class="note"><div class="tape r"></div><i>03</i><p>Baking is the only science that ever interested me. Ironic, for someone who picked commerce.</p></div>
+    <div class="note"><div class="tape"></div><i>04</i><p>Travel keeps me humble. New places keep showing me how much the world has beyond home.</p></div>
+  </div>
+  <svg class="st c-ruby" style="left:1180px;top:84px;width:100px;height:100px;transform:rotate(12deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-lemon" style="left:1296px;top:170px;width:60px;height:60px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <div class="folio"><span class="l" style="color:var(--ruby)">(10) · Ashritha</span><span class="r" style="color:var(--ruby)">10 / 14</span></div>
+</section>
+
+<!-- ============ 11 TOOLKIT ============ -->
+<section class="page dcream p11" data-page="11">
+  <div class="tools-l">
+    <div class="tag">Skills &amp; certifications</div>
+    <h2>The <em>toolkit</em></h2>
+    <div class="sk"><b>Confident in</b><div><span>Communication</span><span>Analysis</span><span>Storytelling</span></div></div>
+    <div class="sk w"><b>Working on</b><div><span>Writing</span><span>Public speaking</span></div></div>
+    <div class="sk t"><b>Tools</b><div><span>Excel</span><span>Canva</span><span>Figma</span><span>Procreate</span><span>Videography basics</span></div></div>
+  </div>
+  <div class="certs">
+    <h4>Certifications</h4>
+    <div class="cert"><span>Bloomberg Market Concepts</span><b>Bloomberg</b></div>
+    <div class="cert"><span>Product &amp; Brand Management</span><b>SWAYAM</b></div>
+    <div class="cert"><span>Foundations of Digital Marketing</span><b>Google</b></div>
+    <div class="cert"><span>Intro to AI, Cloud &amp; GenAI</span><b>Infosys</b></div>
+  </div>
+  <div class="sticky abs" style="left:130px;top:632px;width:300px;--r:-3deg;font-size:26px">always learning something new ✦</div>
+  <svg class="st c-blood" style="left:520px;top:640px;width:76px;height:76px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <div class="folio"><span class="l" style="color:var(--ruby)">(11) · Ashritha</span><span class="r" style="color:var(--ruby)">11 / 14</span></div>
+</section>
+
+<!-- ============ 12 VALUES ============ -->
+<section class="page ruby" data-page="12">
+  <div class="stripe t"></div><div class="stripe b"></div>
+  <div class="val-l">
+    <div class="tag">What I value</div>
+    <h2>Work with <em>character</em></h2>
+    <p class="lead">Great work creates a positive impact while doing as little harm as possible, to people, resources and the planet. And it should have character: a typeface, a colour, a small detail that makes it feel intentional, not generic.</p>
+    <div class="vals"><span>sustainability</span><span>art &amp; design</span><span>human connection</span><span>technology</span></div>
+  </div>
+  <div class="ms-h"><span class="tag">Milestones</span></div>
+  <div class="ms">
+    <div><div class="bw" style="--r:-6deg"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>93.2%</b></div><span>Class XII boards</span></div>
+    <div><div class="bw" style="--r:5deg;--c:var(--blue)"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>3.6</b></div><span>GPA at university</span></div>
+    <div><div class="bw" style="--r:-3deg;--c:var(--dcream)"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>4</b></div><span>Internships, finance to creative</span></div>
+    <div><div class="bw" style="--r:4deg;--c:var(--blue)"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>4</b></div><span>Certifications</span></div>
+    <div><div class="bw" style="--r:-5deg;--c:var(--dcream)"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b class="s">2 yrs</b></div><span>Student-led non-profit</span></div>
+    <div><div class="bw" style="--r:3deg"><svg viewBox="0 0 100 100"><use href="#burst"/></svg><b>1</b></div><span>New sport, learnt from scratch</span></div>
+  </div>
+  <div class="folio"><span class="l">(12) · Ashritha</span><span class="r">12 / 14</span></div>
+</section>
+
+<!-- ============ 13 FUTURE ============ -->
+<section class="page ruby p13" data-page="13">
+  <div class="stripe t"></div><div class="stripe b"></div>
+  <div class="fut-l">
+    <div class="tag">What's next</div>
+    <h2>Where I'm <em>headed</em></h2>
+    <p class="lead">In three to five years, I see myself freelancing or leading a small team that helps brands bring their ideas to life. Work that has character, and, as a business student, work that genuinely meets people's needs.</p>
+  </div>
+  <figure class="pol"><svg class="pclip" style="left:24px;top:-34px" viewBox="0 0 40 100"><use href="#pclip"/></svg><div class="ph"><span>PHOTO · Looking ahead / skyline</span></div><span class="cap">next chapter →</span></figure>
+  <svg class="st c-lemon" style="left:1320px;top:60px;width:70px;height:70px;transform:rotate(14deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <ol class="path">
+    <li><div class="n">01</div><b>Master's</b><span class="d">Marketing &amp; Creativity</span></li>
+    <li><div class="n">02</div><b>Brand &amp; content</b><span class="d">Campaigns, content, ideas</span></li>
+    <li><div class="n">03</div><b>Freelance studio</b><span class="d">My own team, many brands</span></li>
+    <li><div class="n">04</div><b>Entrepreneurship</b><span class="d">Building something of my own</span></li>
+  </ol>
+  <div class="folio"><span class="l">(13) · Ashritha</span><span class="r">13 / 14</span></div>
+</section>
+
+<!-- ============ 14 CONTACT ============ -->
+<section class="page ruby p14" data-page="14">
+  <div class="stripe t"></div><div class="stripe b"></div>
+  <div class="ct-l">
+    <div class="tag">Say hello</div>
+    <h2>Let's work<br>together</h2>
+    <div class="ct-list">
+      <div><b>Email</b><span>ashritha@example.com</span></div>
+      <div><b>Phone</b><span>+91 90000 00000</span></div>
+      <div><b>LinkedIn</b><span>linkedin.com/in/ashritha</span></div>
+      <div><b>Art page</b><span>@ashritha.makes</span></div>
+    </div>
+  </div>
+  <figure class="pol"><div class="tape" style="--tr:5deg"></div><div class="ph"><span>PHOTO · Candid, smiling</span></div><span class="cap">let's make something memorable</span></figure>
+  <div class="sign">Ashritha</div>
+  <svg class="st c-blue" style="left:900px;top:92px;width:80px;height:80px;transform:rotate(-8deg)" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <svg class="st c-lemon" style="left:1316px;top:70px;width:96px;height:96px;transform:rotate(12deg)" viewBox="0 0 100 100"><use href="#burst"/></svg>
+  <svg class="st c-blue" style="left:1330px;top:520px;width:74px;height:74px" viewBox="0 0 100 100"><use href="#star"/></svg>
+  <svg class="st c-lemon" style="left:850px;top:560px;width:80px;height:60px;stroke:none" viewBox="0 0 80 60"><use href="#squig"/></svg>
+  <div class="folio"><span class="l">(14) · Ashritha</span><span class="r">14 / 14</span></div>
+</section>
+
+</body></html>
