@@ -4,11 +4,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Powerplug Icon Carousel</title>
 <style>
-/* Powerplug icon carousel. Add ?bg=dark or ?bg=transparent to the URL to change the background. */
+/* Powerplug icon carousel. Transparent by default, so it sits on any light or dark surface. Add ?bg=white or ?bg=dark to preview on a solid colour. */
 html,body{margin:0;height:100%}
-body{background:#fff;display:grid;place-items:center;overflow:hidden}
+body{background:transparent;display:grid;place-items:center;overflow:hidden}
+body.white{background:#fff}
 body.dark{background:#000}
-body.transparent{background:transparent}
 .stage{width:100%;max-width:393px}
 .car{position:relative;width:100%;height:calc(var(--k,1)*112px);touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 11%,#000 89%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 11%,#000 89%,transparent 100%)}
