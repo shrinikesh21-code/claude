@@ -2,7 +2,7 @@
 """Build portfolio.html from PORTFOLIO.md. Standard library only.
 
 Usage: python3 build.py
-Reads PORTFOLIO.md and writes portfolio.html next to it. Image paths stay relative,
+Reads PORTFOLIO.md and writes portfolio.html plus one page per project in case-studies/. Image paths stay relative,
 so the folder can be zipped and moved anywhere.
 """
 import html
@@ -13,8 +13,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "PORTFOLIO.md"
 OUT = ROOT / "portfolio.html"
+CASES = ROOT / "case-studies"
 PRIORITIES = ["P1", "P2", "P3"]
-SECTIONS = {"context", "outcome", "metrics", "screens", "to fill in"}
+SECTIONS = {"context", "problem", "process", "solution", "outcome", "learnings", "metrics", "screens", "to fill in"}
 
 
 def kv(line):
@@ -137,6 +138,7 @@ def project_html(p, idx):
     {outcome_html}
     <div class="tags">{tags}</div>
     {f'<p class="tools">Tools · {tools}</p>' if tools else ''}
+    <a class="more" href="case-studies/{esc(p.get('id', pid))}.html">Read case study <span>→</span></a>
   </div>
   {shots}
 </article>"""
@@ -179,6 +181,8 @@ h1,h2,h3,h4{letter-spacing:-.035em;line-height:1.05;margin:0}
 .metrics small{color:var(--mute);font-size:12px}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
 .tools{margin:0;color:var(--mute);font-size:13px}
+.more{align-self:flex-start;display:inline-flex;gap:8px;align-items:center;background:var(--dark);color:#fff;text-decoration:none;font-size:13px;font-weight:500;padding:11px 18px;border-radius:999px;box-shadow:0 10px 24px -12px rgba(0,0,0,.5);transition:.2s}
+.more:hover{transform:translateY(-1px)}
 .shots{background:var(--soft);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;min-height:420px}
 .stage{flex:1;display:grid;place-items:center;position:relative;min-height:300px}
 .stage img{width:min(100%,460px);aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.18))}
@@ -207,10 +211,135 @@ document.querySelectorAll('.thumb').forEach(function(b){b.addEventListener('clic
 """
 
 
-def build(profile, projects):
-    projects = sorted(
+FONTS = (
+    '<link rel="preconnect" href="https://fonts.googleapis.com">'
+    '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
+)
+
+CASE_CSS = """
+.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:56px}
+.nav a.pill{text-decoration:none;transition:.2s}
+.nav a.pill:hover{border-color:var(--ink)}
+.c-hero h1{font-size:clamp(38px,6.2vw,80px);font-weight:600;margin-top:22px;max-width:15ch}
+.c-hero .sub{font-size:clamp(18px,2vw,24px);color:var(--mute);letter-spacing:-.02em;max-width:640px;margin:22px 0 0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:44px 0 14px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px 22px;display:flex;flex-direction:column;gap:18px;min-height:110px;justify-content:space-between}
+.fact small{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.fact b{font-size:19px;font-weight:500;letter-spacing:-.02em;line-height:1.25}
+.gallery{background:var(--card);border:1px solid var(--line);border-radius:32px;padding:20px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));gap:14px;align-items:start}
+.tile{background:var(--soft);border:0;border-radius:24px;padding:26px 26px 20px;display:flex;flex-direction:column;gap:16px;cursor:zoom-in;font:inherit;color:inherit;text-align:left;transition:.25s}
+.tile:hover{transform:translateY(-3px)}
+.tile img{width:100%;height:auto;display:block;filter:drop-shadow(0 22px 26px rgba(0,0,0,.2))}
+.tile span{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.story{margin-top:64px}
+.row{display:grid;grid-template-columns:240px 1fr;gap:32px;padding:38px 0;border-top:1px solid var(--line)}
+.row .pill{align-self:start;justify-self:start}
+.row .txt{font-size:clamp(17px,1.6vw,20px);color:#5f5f5f;max-width:720px;letter-spacing:-.01em}
+@media (prefers-color-scheme:dark){.row .txt{color:#a8a8a8}}
+.row .txt p{margin:0 0 16px}.row .txt ul{margin:0 0 16px;padding-left:20px}.row .txt li{margin-bottom:6px}
+.row.dark{background:var(--dark);border:0;border-radius:32px;padding:40px;margin:14px 0;color:#fff;box-shadow:0 24px 50px -24px rgba(0,0,0,.5)}
+.row.dark .txt{color:#d4d4d4}
+.row.dark .pill{background:transparent;color:#fff;border-color:#3a3a3a}
+.cstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:14px}
+.next{margin-top:72px;background:var(--card);border:1px solid var(--line);border-radius:32px;padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.next small{color:var(--mute);font-size:12px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.next h3{font-size:clamp(24px,3vw,34px);font-weight:600;margin-top:10px}
+.next .more{align-self:center}
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;place-items:center;z-index:10;cursor:zoom-out;padding:24px}
+.lb.on{display:grid}.lb img{max-width:min(92vw,900px);max-height:90vh;object-fit:contain}
+@media (max-width:860px){.row{grid-template-columns:1fr;gap:16px;padding:28px 0}.row.dark{padding:28px 24px}}
+@media (max-width:600px){.tiles{grid-template-columns:1fr 1fr}.tile{padding:16px 16px 14px}.facts{grid-template-columns:1fr 1fr}.fact{min-height:96px;padding:16px}}
+"""
+
+CASE_JS = """
+var lb=document.getElementById('lb'),lbi=lb.querySelector('img');
+document.querySelectorAll('.tile').forEach(function(t){t.addEventListener('click',function(){
+  lbi.src=t.dataset.src;lbi.alt=t.dataset.cap;lb.classList.add('on');});});
+lb.addEventListener('click',function(){lb.classList.remove('on');});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on');});
+"""
+
+STORY = [("context", "Context"), ("problem", "Problem"), ("process", "Process"),
+         ("solution", "Solution"), ("outcome", "Outcome"), ("learnings", "Learnings")]
+
+
+def ordered(projects):
+    return sorted(
         projects, key=lambda p: PRIORITIES.index(p["priority"]) if p.get("priority") in PRIORITIES else len(PRIORITIES)
     )
+
+
+def case_page(profile, p, projects):
+    """One case study page. Lives in case-studies/, so asset paths get a ../ prefix."""
+    role = p.get("role") or profile.get("role", "")
+    company = profile.get("company", "")
+    facts = [
+        ("Role", role), ("Company", company), ("Tools", " · ".join(csv(p.get("tools", "")))),
+        ("Status", p.get("status", "")), ("Timeline", p.get("timeline", "")), ("Team", p.get("team", "")),
+    ]
+    facts_html = "".join(f'<div class="fact"><small>{k}</small><b>{esc(v)}</b></div>' for k, v in facts if v)
+    tags = "".join(f'<span class="pill">{esc(t)}</span>' for t in csv(p.get("tags", "")))
+    status = f'<span class="pill status"><i></i>{esc(p["status"])}</span>' if p.get("status") else ""
+
+    shots = pairs(p["sections"].get("screens", ""))
+    gallery = ""
+    if shots:
+        tiles = "".join(
+            f'<button class="tile" data-src="../{esc(src)}" data-cap="{esc(cap)}">'
+            f'<img src="../{esc(src)}" alt="{esc(cap or p["title"])}" loading="lazy">'
+            f'{f"<span>{esc(cap)}</span>" if cap else ""}</button>'
+            for src, cap in shots
+        )
+        gallery = f'<section class="gallery"><div class="tiles">{tiles}</div></section>'
+
+    rows = ""
+    for key, label in STORY:
+        text = p["sections"].get(key, "")
+        if text.strip():
+            dark = " dark" if key == "outcome" else ""
+            rows += f'<section class="row{dark}"><span class="pill">{label}</span><div class="txt">{rich(text)}</div></section>'
+    story = f'<div class="story">{rows}</div>' if rows else ""
+
+    metrics = pairs(p["sections"].get("metrics", ""))
+    cstats = (
+        '<div class="cstats">'
+        + "".join(
+            f'<div class="stat{" dark" if i == 0 else ""}"><small>{esc(l)}</small><b>{esc(v)}</b></div>'
+            for i, (v, l) in enumerate(metrics)
+        )
+        + "</div>"
+        if metrics
+        else ""
+    )
+
+    idx = projects.index(p)
+    nxt = projects[idx + 1] if idx + 1 < len(projects) else None
+    if nxt:
+        nxt_html = (
+            f'<div><small>Next project</small><h3>{esc(nxt["title"])}</h3></div>'
+            f'<a class="more" href="{esc(nxt.get("id", ""))}.html">Read case study <span>→</span></a>'
+        )
+    else:
+        nxt_html = '<div><small>That is all for now</small><h3>Back to all work</h3></div><a class="more" href="../portfolio.html">Portfolio <span>→</span></a>'
+
+    title = f"{p['title']} · {company} case study" if company else p["title"]
+    sub = f'<p class="sub">{inline(p["summary"])}</p>' if p.get("summary") else ""
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{esc(title)}</title>{FONTS}
+<style>{CSS}{CASE_CSS}</style></head><body><div class="wrap">
+<nav class="nav"><a class="pill" href="../portfolio.html">← Portfolio</a><span class="pill">Case study</span></nav>
+<header class="c-hero"><div class="meta">{status}{tags}</div><h1>{esc(p['title'])}</h1>{sub}</header>
+<div class="facts">{facts_html}</div>
+{gallery}{story}{cstats}
+<section class="next">{nxt_html}</section>
+<footer><span>{esc(profile.get('title', ''))}</span><span>Updated {esc(profile.get('updated', ''))}</span></footer>
+</div><div class="lb" id="lb"><img alt=""></div><script>{CASE_JS}</script></body></html>"""
+
+
+def build(profile, projects):
+    projects = ordered(projects)
     screens = sum(len(pairs(p["sections"].get("screens", ""))) for p in projects)
     live = sum(1 for p in projects if p.get("status", "").lower() == "live")
     tools = {t for p in projects for t in csv(p.get("tools", ""))}
@@ -232,7 +361,7 @@ def build(profile, projects):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(profile.get('title', 'Portfolio'))}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+{FONTS}
 <style>{CSS}</style></head><body><div class="wrap">
 <header class="hero"><div><span class="pill">{who}{esc(role)}{' · ' + esc(company) if company else ''}</span>
 <h1>{esc(role)}{' at ' + esc(company) if company else ''}.<br><span>{esc(profile.get('tagline', ''))}</span></h1></div>
@@ -253,8 +382,17 @@ def main():
         for src, _ in pairs(p["sections"].get("screens", "")):
             if not (ROOT / src).exists():
                 print(f"warning: missing file {src} in '{p['title']}'", file=sys.stderr)
+    projects = ordered(projects)
     OUT.write_text(build(profile, projects), encoding="utf-8")
-    print(f"built {OUT.name}: {len(projects)} project(s)")
+    CASES.mkdir(exist_ok=True)
+    for stale in CASES.glob("*.html"):
+        stale.unlink()
+    for p in projects:
+        if not p.get("id"):
+            print(f"warning: '{p['title']}' has no id, so no case study page was built", file=sys.stderr)
+            continue
+        (CASES / f"{p['id']}.html").write_text(case_page(profile, p, projects), encoding="utf-8")
+    print(f"built {OUT.name} and {len(projects)} case study page(s)")
 
 
 if __name__ == "__main__":

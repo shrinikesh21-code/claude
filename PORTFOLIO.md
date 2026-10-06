@@ -17,13 +17,15 @@ Projects are ordered by priority: P1 first, P3 last. Read CLAUDE.md for the form
 - status: Live
 - added: 2026-10-06
 - tags: Retail, Product page, Visual design, 3D
+- role: Product Designer
 - tools: Blender, Figma
 - summary: Realistic colour icons for the retail page that accurately match each ring finish in colour and texture. Live on every official Ultrahuman product page.
 
 ### Context
 Each Ultrahuman ring is sold in several metal finishes. The retail product pages needed colour icons that look like the real material, so a customer choosing a finish sees what the ring will actually look like.
 
-The icons were built in Blender to capture each finish's colour, sheen and surface texture, then prepared and exported from Figma as SVG for the product pages.
+### Solution
+Realistic icons for each finish, built in Blender to capture its colour, sheen and surface texture, then prepared and exported from Figma as SVG for the product pages.
 
 ### Outcome
 All five finishes are live on the official Ultrahuman product pages: Aster Black, Bionic Gold, Brushed Rose Gold, Matte Grey and Raw Titanium.
