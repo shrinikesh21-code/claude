@@ -1,0 +1,567 @@
+<title>Powerplugs Upsell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
+<style>
+/* Layout: gallery chrome (tabs + rationale) around live phone mockups; each phone carries its own fixed palette like a real device screen. */
+:root{
+  --bg:#eceef3; --fg:#10121a; --mute:#5b6070; --line:#d3d6e0; --card:#ffffff; --accent:#1b34f0; --bezel:#0d0f16;
+  --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'Geist Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0d13; --fg:#eceef6; --mute:#9aa0b4; --line:#252a3d; --card:#151826; --accent:#8397ff; --bezel:#000; color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0d13; --fg:#eceef6; --mute:#9aa0b4; --line:#252a3d; --card:#151826; --accent:#8397ff; --bezel:#000; color-scheme:dark}
+
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:32px 64px}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit}
+.wrap{max-width:1180px;margin-inline:auto;display:flex;flex-direction:column;gap:28px}
+header.top{display:flex;flex-direction:column;gap:8px;max-width:60ch}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+h1{margin:0;font-size:clamp(28px,4vw,40px);line-height:1.08;font-weight:500;letter-spacing:-.02em;text-wrap:balance}
+header.top p{margin:0;color:var(--mute);text-wrap:pretty}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:999px;cursor:pointer;font-size:14px;display:flex;gap:8px;align-items:center}
+.tab .n{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.tab[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tab[aria-selected="true"] .n{color:inherit;opacity:.7}
+.tab.all{margin-left:auto}
+.tab:focus-visible,.pill:focus-visible,.row:focus-visible,.tile:focus-visible,.link:focus-visible,.opt:focus-visible,.maxbar:focus-visible,.pcard:focus-visible,.x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.single{display:grid;grid-template-columns:minmax(0,406px) minmax(0,1fr);gap:48px;align-items:start}
+.panel{display:flex;flex-direction:column;gap:20px;max-width:56ch;padding-top:8px}
+.panel h2{margin:0;font-size:26px;font-weight:500;letter-spacing:-.01em}
+.panel p{margin:0;color:var(--mute);text-wrap:pretty}
+.panel dl{margin:0;display:grid;gap:16px}
+.panel dt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-bottom:4px}
+.panel dd{margin:0;text-wrap:pretty}
+.note{border-top:1px solid var(--line);padding-top:16px;font-size:13px;color:var(--mute)}
+.grid5{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,390px),1fr));gap:48px 24px;justify-items:center}
+.grid5 figure{margin:0;display:flex;flex-direction:column;gap:14px;align-items:center;width:100%;max-width:390px}
+.grid5 figcaption{font-weight:500}
+.grid5 figcaption span{font-family:var(--mono);font-size:11px;color:var(--mute);margin-right:8px}
+@media (max-width:900px){.single{grid-template-columns:minmax(0,1fr);justify-items:center}.panel{max-width:390px}.tab.all{margin-left:0}}
+
+/* ---------- phone ---------- */
+.ph{--p-bg:#f7f7f8;--p-surface:#ffffff;--p-fg:#0b0b10;--p-mute:#797c88;--p-line:#e3e4e9;--p-blue:#1b34f0;--p-blue-soft:#e7eaff;--p-green:#12915a;--p-pill:#000;--p-pillfg:#fff;
+  position:relative;width:100%;max-width:390px;height:820px;border-radius:46px;overflow:hidden;background:var(--p-bg);color:var(--p-fg);box-shadow:0 0 0 9px var(--bezel),0 0 0 10px var(--line),0 40px 70px -30px rgba(0,0,0,.45);isolation:isolate}
+.ph[data-c="c4"]{--p-bg:#090c1b;--p-surface:#141a38;--p-fg:#f1f2fa;--p-mute:#8e94b5;--p-line:#252c52;--p-blue:#4d66ff;--p-blue-soft:#1c2558;--p-green:#3fdc98;--p-pill:#f1f2fa;--p-pillfg:#090c1b}
+.sb{position:absolute;inset:0 0 auto 0;height:48px;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:6px 28px 0;font-weight:600;font-size:16px;pointer-events:none;background:linear-gradient(to bottom,var(--p-bg) 55%,transparent)}
+.ph[data-c="c1"] .sb,.ph[data-c="c2"] .sb,.ph[data-c="c5"] .sb{background:linear-gradient(to bottom,var(--p-surface) 60%,transparent)}
+.sb svg{height:12px;width:auto;fill:currentColor}
+.sb .ic{display:flex;gap:6px;align-items:center}
+.scroll{height:100%;overflow-y:auto;overflow-x:hidden;padding-bottom:170px;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:52px 20px 0}
+.nav .back{width:40px;height:40px;border-radius:50%;border:0;background:var(--p-bg);display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.ph[data-c="c4"] .nav .back{background:var(--p-surface)}
+.nav svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav .mark{width:28px;height:28px;fill:currentColor}
+.nav .slot{width:40px;display:flex;justify-content:flex-end}
+.hero{background:var(--p-surface);padding-bottom:26px}
+.ph[data-c="c3"] .hero{background:var(--p-bg)}
+.ph[data-c="c4"] .hero{background:radial-gradient(120% 90% at 50% 0%,#1d2b73 0%,#090c1b 70%)}
+.car{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;overflow:hidden;height:104px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
+.hero h1{font-size:28px;line-height:1.12;text-align:center;padding:14px 28px 0;font-weight:500;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.hero .sub{margin:8px auto 0;max-width:30ch;text-align:center;color:var(--p-mute);font-size:14px}
+
+.av{width:var(--s);height:var(--s);border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 32% 26%,var(--a) 0,var(--b) 48%,var(--c) 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),inset 0 -6px 12px rgba(0,0,0,.28),0 2px 8px rgba(0,0,0,.16)}
+.av svg{width:46%;height:46%;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.94}
+.av.dim{filter:saturate(.3) brightness(.98)}
+.av .lk{position:absolute;right:-3px;bottom:-3px;width:22px;height:22px;border-radius:50%;background:var(--p-surface);display:grid;place-items:center;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.av .lk svg{width:12px;height:12px;stroke:var(--p-fg);opacity:1;stroke-width:2}
+.orb{border-radius:50%;display:grid;place-items:center;flex:none;background:radial-gradient(circle at 32% 24%,#8fa2ff 0,#1b34f0 52%,#0a1384 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),inset 0 -8px 16px rgba(0,0,20,.4),0 8px 30px rgba(40,70,255,.45);color:#fff;font-family:var(--serif);font-style:italic}
+
+.sec{padding:0 20px;margin-top:30px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:4px}
+.sec-h h2{margin:0;font-size:18px;font-weight:500;letter-spacing:-.01em}
+.sec-h .sub{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--p-mute);text-align:right}
+.sec-d{margin:0 0 6px;color:var(--p-mute);font-size:13.5px}
+.link{background:none;border:0;padding:4px 0;cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--p-blue)}
+.list{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border:0;border-top:1px solid var(--p-line);width:100%;text-align:left;background:none;cursor:pointer}
+.list>.row:first-child{border-top:0}
+div.row{cursor:default}
+.row.p{grid-template-columns:44px minmax(0,1fr) auto 12px}
+.meta{min-width:0}
+.meta b{display:block;font-weight:500;font-size:16px;line-height:1.25}
+.meta i{display:block;font-style:normal;color:var(--p-mute);font-size:13.5px;margin-top:2px;line-height:1.3}
+.tag{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.tag.ok{color:var(--p-green)}
+.tag.off{color:var(--p-mute);font-size:10.5px}
+.price{display:flex;flex-direction:column;align-items:flex-end;gap:2px;white-space:nowrap}
+.price b{font-weight:500;font-size:15px;font-variant-numeric:tabular-nums}
+.price b small{font-size:12px;color:var(--p-mute);font-weight:400}
+.chev{width:12px;height:12px;stroke:var(--p-mute);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chk{width:26px;height:26px;border-radius:50%;border:1.5px solid #b8bbc7;display:grid;place-items:center;background:var(--p-surface);transition:background .15s,border-color .15s}
+.ph[data-c="c4"] .chk{border-color:#4a5280;background:transparent}
+.chk svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+[aria-checked="true"] .chk{background:var(--p-blue);border-color:var(--p-blue)}
+[aria-checked="true"] .chk svg{opacity:1}
+.empty{padding:16px;border-radius:16px;background:var(--p-surface);color:var(--p-mute);font-size:14px;text-align:center}
+
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:5;padding:34px 20px 30px;display:flex;flex-direction:column;align-items:center;gap:10px;background:linear-gradient(to top,var(--p-bg) 55%,transparent)}
+.pill{height:52px;min-width:210px;padding:0 28px;border-radius:999px;border:0;background:var(--p-pill);color:var(--p-pillfg);font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.pill.blue{background:var(--p-blue);color:#fff}
+.pill.sm{height:42px;min-width:0;padding:0 18px;font-size:12px}
+.pill.full{width:100%}
+.pill.white{background:#fff;color:#0a0e24}
+
+/* shared blue bundle card (c1, c5) */
+.mx{background:var(--p-surface);border-radius:26px;padding:6px;box-shadow:0 0 0 1px var(--p-line)}
+.mx .cap{display:flex;justify-content:space-between;align-items:center;padding:11px 14px 10px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--p-blue)}
+.mx .in{background:var(--p-bg);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:14px}
+.mx .top{display:flex;align-items:center;gap:14px}
+.mx .top .t{flex:1;min-width:0}
+.mx .top b{display:block;font-size:17px;font-weight:500}
+.mx .top .pr{font-size:14px;color:var(--p-fg);font-variant-numeric:tabular-nums}
+.mx .top .pr s{color:var(--p-mute);margin-left:6px;font-size:13px}
+.stack{display:flex}
+.stack .av{margin-left:-8px;box-shadow:0 0 0 2px var(--p-bg),0 1px 4px rgba(0,0,0,.2)}
+.stack .av:first-child{margin-left:0}
+.mx .inc{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--p-mute);line-height:1.35}
+.mx .inc span{min-width:0}
+
+/* c2 receipt */
+.rc{background:var(--p-surface);border-radius:22px;padding:18px 18px 16px;box-shadow:0 0 0 1px var(--p-line);font-family:var(--mono);font-size:12.5px;display:flex;flex-direction:column;gap:10px}
+.rc h3{margin:0;font-family:var(--sans);font-weight:500;font-size:18px;letter-spacing:-.01em}
+.rc .ln{display:flex;justify-content:space-between;gap:12px;color:var(--p-mute)}
+.rc .ln span:first-child{min-width:0}
+.rc .ln s{font-variant-numeric:tabular-nums}
+.rc .ln .in{color:var(--p-blue);letter-spacing:.08em;font-weight:500}
+.rc hr{border:0;border-top:1.5px dashed var(--p-line);margin:2px 0;width:100%}
+.rc .tot{display:flex;justify-content:space-between;align-items:baseline;color:var(--p-fg)}
+.rc .tot b{font-family:var(--sans);font-size:26px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rc .tot b small{font-size:13px;color:var(--p-mute);font-weight:400}
+.rc .sv{align-self:flex-start;background:#dff5ea;color:#0b6b41;border-radius:999px;padding:5px 11px;letter-spacing:.06em;text-transform:uppercase;font-size:11.5px}
+.bars{display:flex;flex-direction:column;gap:8px;font-family:var(--sans);font-size:13px}
+.bar{position:relative;height:38px;border-radius:12px;background:var(--p-bg);overflow:hidden;display:flex;align-items:center;justify-content:space-between;padding:0 12px}
+.bar span{position:absolute;inset:0 auto 0 0;background:#d9dbe4}
+.bar.mx2 span{background:var(--p-blue)}
+.bar em,.bar b{position:relative;font-style:normal;font-weight:500;font-variant-numeric:tabular-nums}
+.bar.mx2{color:#fff}
+.rc .fine{font-family:var(--sans);font-size:12px;color:var(--p-mute);text-align:center}
+
+/* c3 ring + tiles */
+.ringbox{display:grid;place-items:center;position:relative;height:150px;margin-top:6px}
+.ringbox svg{width:150px;height:150px}
+.seg{fill:none;stroke-width:9;stroke-linecap:round}
+.seg.off{stroke:var(--p-line)}
+.seg.on{stroke:var(--p-blue)}
+.seg.pend{stroke:var(--p-blue);opacity:.38}
+.seg.pop{animation:pop .55s var(--d,0ms) both}
+@keyframes pop{from{opacity:0;stroke-width:2}to{opacity:1;stroke-width:9}}
+.ringc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;text-align:center}
+.ringc b{font-size:38px;font-weight:500;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.ringc b small{font-size:15px;color:var(--p-mute);font-weight:400}
+.ringc em{font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--p-mute);margin-top:4px}
+.ringc em.pn{color:var(--p-blue)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px}
+.tile{display:flex;flex-direction:column;gap:10px;text-align:left;background:var(--p-surface);border:1.5px solid transparent;border-radius:20px;padding:14px;position:relative;cursor:pointer;min-width:0}
+.tile .chk{position:absolute;top:12px;right:12px}
+.tile[aria-checked="true"]{border-color:var(--p-blue);background:var(--p-blue-soft)}
+.tile b{font-weight:500;font-size:15px;line-height:1.25;display:block}
+.tile i{font-style:normal;font-size:12.5px;color:var(--p-mute);line-height:1.3;display:block;margin-top:2px}
+.tile.lk{cursor:pointer}
+.tile .pr{margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.tile .pr b{font-size:14px;font-variant-numeric:tabular-nums}
+.tile .pr b small{font-size:11.5px;color:var(--p-mute);font-weight:400}
+.fin{background:var(--p-surface);border-radius:26px;padding:20px;box-shadow:0 0 0 1px var(--p-line);display:flex;flex-direction:column;gap:14px}
+.fin .lab{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--p-blue)}
+.fin h3{margin:0;font-size:22px;font-weight:500;letter-spacing:-.015em;line-height:1.15;text-wrap:balance}
+.fin p{margin:0;color:var(--p-mute);font-size:14px}
+.fin .path{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;color:var(--p-mute);letter-spacing:.05em;text-transform:uppercase}
+.fin .path b{color:var(--p-fg);font-weight:500}
+.fin .path i{flex:1;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--p-blue) var(--w),var(--p-line) var(--w))}
+
+/* c4 dark premium */
+.mhero{margin:0 -20px;padding:30px 20px 22px;background:radial-gradient(120% 80% at 50% 0%,#24379b 0%,#10173b 55%,#090c1b 100%);display:flex;flex-direction:column;align-items:center;gap:14px;border-radius:30px 30px 0 0}
+.mhero .car{margin-top:0;width:calc(100% + 40px)}
+.mhero h3{margin:0;font-size:28px;font-weight:500;letter-spacing:-.02em}
+.mhero .pr{display:flex;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}
+.mhero .pr b{font-size:22px;font-weight:500}
+.mhero .pr s{color:var(--p-mute)}
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 11px;font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;background:var(--p-blue);color:#fff}
+.chip.soft{background:var(--p-surface);color:var(--p-fg);box-shadow:0 0 0 1px var(--p-line)}
+.mhero p{margin:0;color:#aab1d6;font-size:14px;text-align:center;max-width:32ch}
+.incl{background:var(--p-surface);border-radius:22px;padding:6px 16px;margin-top:-6px}
+.incl .row{padding:11px 0;grid-template-columns:36px minmax(0,1fr) auto}
+.incl .meta b{font-size:15px}
+.incl .meta i{font-size:12.5px}
+.maxbar{display:flex;align-items:center;gap:12px;width:100%;border:0;border-radius:22px;padding:10px 10px 10px 12px;cursor:pointer;text-align:left;background:linear-gradient(100deg,#2236c8,#4d66ff);color:#fff;box-shadow:0 10px 30px -8px rgba(60,90,255,.7),inset 0 0 0 1px rgba(255,255,255,.22)}
+.maxbar .t{flex:1;min-width:0;line-height:1.2}
+.maxbar .t b{display:block;font-weight:500;font-size:15px}
+.maxbar .t small{display:block;font-size:12px;opacity:.82;margin-top:2px}
+.maxbar .g{background:#fff;color:#0a0e24;border-radius:999px;padding:9px 14px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;font-weight:500}
+.dock.d4{background:linear-gradient(to top,var(--p-bg) 65%,transparent);gap:10px}
+.dock.d4 .pill{width:100%}
+
+/* c5 rail + compare sheet */
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:10px -20px 0;padding:2px 20px 14px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.pcard{flex:0 0 236px;scroll-snap-align:start;background:var(--p-surface);border:0;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:12px;text-align:left;cursor:pointer;box-shadow:0 0 0 1px var(--p-line);min-width:0}
+.pcard .hd{display:flex;justify-content:space-between;align-items:flex-start}
+.pcard b{display:block;font-weight:500;font-size:17px;line-height:1.2}
+.pcard i{display:block;font-style:normal;font-size:13px;color:var(--p-mute);margin-top:4px;line-height:1.35}
+.pcard .ft{display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:8px}
+.pcard .ft .price{align-items:flex-start}
+.pcard .get{border:1.5px solid var(--p-fg);border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.dots{display:flex;justify-content:center;gap:5px;margin-top:-4px;font-family:var(--mono);font-size:11px;color:var(--p-mute);letter-spacing:.06em;text-transform:uppercase}
+.mx.b5 .in{background:linear-gradient(160deg,#1a2fd6,#0d1a8f);color:#fff}
+.mx.b5 .top b,.mx.b5 .top .pr{color:#fff}
+.mx.b5 .top .pr s{color:#aab4ff}
+.mx.b5 .inc{color:#c6ccff}
+.mx.b5 .stack .av{box-shadow:0 0 0 2px #14239f,0 1px 4px rgba(0,0,0,.2)}
+.mx.b5 p{margin:0;font-size:15px;line-height:1.35}
+
+/* sheets + toast */
+.shw{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:flex-end}
+.bd{position:absolute;inset:0;background:rgba(5,7,18,.5);animation:fade .2s both}
+.sheet{position:relative;background:var(--p-surface);border-radius:30px 30px 0 0;padding:10px 20px 26px;max-height:90%;overflow-y:auto;animation:up .28s cubic-bezier(.2,.8,.2,1) both;color:var(--p-fg);display:flex;flex-direction:column;gap:14px;scrollbar-width:none}
+.sheet::-webkit-scrollbar{display:none}
+.grab{width:40px;height:4px;border-radius:2px;background:var(--p-line);align-self:center;flex:none}
+.x{position:absolute;top:14px;right:16px;width:32px;height:32px;border-radius:50%;border:0;background:var(--p-bg);display:grid;place-items:center;cursor:pointer;z-index:2}
+.x svg{width:14px;height:14px;stroke:var(--p-fg);fill:none;stroke-width:2;stroke-linecap:round}
+.sheet h3{margin:0;font-size:24px;font-weight:500;letter-spacing:-.02em;line-height:1.1}
+.sheet p{margin:0;color:var(--p-mute);font-size:14px}
+.sheet ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14.5px}
+.sheet li{display:flex;gap:10px;align-items:flex-start}
+.sheet li svg{width:16px;height:16px;flex:none;margin-top:2px;stroke:var(--p-green);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sheet .big{display:flex;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}
+.sheet .big b{font-size:26px;font-weight:500;letter-spacing:-.02em}
+.sheet .big s{color:var(--p-mute)}
+.sheet .alt{background:none;border:0;cursor:pointer;color:var(--p-blue);font-size:14px;padding:6px;text-align:center}
+.sheet .alt b{font-weight:500}
+.sheet .box{background:var(--p-bg);border-radius:20px;padding:4px 14px}
+.sheet .box .row{padding:11px 0;grid-template-columns:36px minmax(0,1fr)}
+.sheet .box .meta b{font-size:15px}
+.sheet .box .meta i{font-size:12.5px}
+.opt{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:12px;align-items:start;border:1.5px solid var(--p-line);background:none;border-radius:20px;padding:14px;text-align:left;cursor:pointer;width:100%}
+.opt[aria-checked="true"]{border-color:var(--p-blue);background:var(--p-blue-soft)}
+.opt .rd{width:22px;height:22px;border-radius:50%;border:1.5px solid #b8bbc7;display:grid;place-items:center;margin-top:1px}
+.opt[aria-checked="true"] .rd{border-color:var(--p-blue)}
+.opt[aria-checked="true"] .rd::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--p-blue)}
+.opt b{display:block;font-weight:500;font-size:16px}
+.opt small{display:block;color:var(--p-mute);font-size:13px;line-height:1.35;margin-top:2px}
+.opt .pr{font-variant-numeric:tabular-nums;font-weight:500;font-size:15px;white-space:nowrap}
+.opt .stack{margin-top:8px}
+.opt .nudge{display:inline-block;margin-top:8px;background:#dff5ea;color:#0b6b41;border-radius:999px;padding:3px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+.badge{display:inline-block;background:var(--p-blue);color:#fff;border-radius:999px;padding:2px 9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;margin-left:6px;vertical-align:2px}
+.toast{position:absolute;top:58px;left:50%;transform:translateX(-50%);z-index:30;background:#111;color:#fff;padding:10px 16px;border-radius:999px;font-size:13.5px;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis;animation:drop .25s both;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.ph[data-c="c4"] .toast{background:#fff;color:#0a0e24}
+@keyframes fade{from{opacity:0}}
+@keyframes up{from{transform:translateY(100%)}}
+@keyframes drop{from{opacity:0;transform:translate(-50%,-10px)}}
+@media (prefers-reduced-motion:reduce){.bd,.sheet,.toast,.seg.pop{animation:none}}
+@media (max-width:420px){.ph{height:760px}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Ring AIR · Powerplugs</span>
+    <h1>Powerplugs upsell, five directions</h1>
+    <p>Every direction follows your flow: free plugs already active, free plugs to activate in one tap, premium plugs bought one at a time, then the Ultrahuman MAX bundle. Tap through the phones. Checkboxes, sheets and CTAs all work.</p>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Ideations"></nav>
+  <main id="stage"></main>
+  <p class="note">Plug names, copy and prices are placeholders. Edit them in the CONFIG block at the top of the script. MAX price and savings are computed from the five premium plug prices, so the numbers stay consistent.</p>
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+const G={
+  cup:'<path d="M5 9h11v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V9zM16 10h2a2 2 0 0 1 0 4h-2M8 4v2M12 4v2"/>',
+  moon:'<path d="M18 14.5A7 7 0 0 1 9.5 6 7 7 0 1 0 18 14.5z"/>',
+  drop:'<path d="M12 4c3 4 5 6.5 5 9a5 5 0 0 1-10 0c0-2.5 2-5 5-9z"/>',
+  fork:'<path d="M7 4v6a2 2 0 0 0 2 2v8M11 4v6a2 2 0 0 1-2 2M16 4c-2 2-2 6 0 8v8"/>',
+  plane:'<path d="M3 13l18-8-6 15-3-6-9-1z"/>',
+  walk:'<path d="M5 12h3l2-5 4 10 2-5h3"/>',
+  cycle:'<circle cx="12" cy="12" r="5.5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>',
+  heart:'<path d="M12 19s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 9c0 5.5-7 10-7 10z"/>',
+  pulse:'<path d="M3 12h4l2-6 4 12 2-6h6"/>',
+  lungs:'<path d="M12 5v8M9 9c-3 1-4 5-4 9 2 0 4-1 4-4M15 9c3 1 4 5 4 9-2 0-4-1-4-4"/>',
+  bolt:'<path d="M13 3L6 13h5l-1 8 8-11h-5l0-7z"/>',
+  spark:'<path d="M12 4v16M4 12h16M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>'
+};
+const FREE=[
+  {id:'caffeine',name:'Caffeine Window',line:'Time your last coffee to protect sleep',g:['#ffd79a','#f08a24','#5a2a0a'],i:'cup'},
+  {id:'sleep',name:'Sleep Rhythm',line:'Bedtime consistency score',g:['#cfd8ff','#4a5bd6','#101846'],i:'moon'},
+  {id:'hydration',name:'Hydration Nudges',line:'Reminders tuned to heat and activity',g:['#bff0ff','#2aa6d8','#07334a'],i:'drop'},
+  {id:'meal',name:'Meal Timing',line:'How late dinners shift your recovery',g:['#ffe3b8','#e8693a','#3b140a'],i:'fork'},
+  {id:'jetlag',name:'Jet Lag Planner',line:'Light and sleep plan for new time zones',g:['#e8d8ff','#8a5be0','#22104a'],i:'plane'},
+  {id:'move',name:'Move Streaks',line:'Daily movement goals and streaks',g:['#d6ffd0','#38b76a','#0a3a1f'],i:'walk'}
+];
+const START_ACTIVE=['caffeine','sleep'];
+const PAID=[
+  {id:'cycle',name:'Cycle &amp; Ovulation Pro',line:'Cycle and ovulation tracking',price:349.99,g:['#ffd0d8','#e5384f','#4a0a16'],i:'cycle',bullets:['Predicts your fertile window from temperature trends','Flags cycle shifts early','Daily readiness adjusted to your phase']},
+  {id:'afib',name:'Afib Powerplug',line:'Heart rhythm and AFib screening',price:299.99,g:['#ffe9a8','#ff7a2f','#5a1408'],i:'pulse',bullets:['Screens for irregular rhythm while you rest','Alerts you when a pattern needs attention','Shareable report for your doctor']},
+  {id:'cardio',name:'Cardio Adaptability',line:'Cardiovascular fitness tracking',price:249.99,g:['#d9e2ff','#6a7bd0','#1b2147'],i:'heart',bullets:['Tracks how fast your heart recovers','Shows fitness trend over weeks','Training load guidance']},
+  {id:'resp',name:'Respiratory Powerplug',line:'Breathing and recovery insights',price:249.99,g:['#bfe8d4','#2f7d63','#0b2a21'],i:'lungs',bullets:['Overnight breathing rate and variation','Spots changes before you feel them','Recovery tips tied to your breathing']},
+  {id:'migraine',name:'Migraine Powerplug',line:'Migraine forecasting',price:299.99,g:['#ffe0a6','#d98a2b','#14222c'],i:'bolt',bullets:['Forecasts high-risk days from sleep and stress','Logs triggers automatically','Prep nudges before a likely attack']}
+];
+const EXTRA=[
+  {id:'jade',name:'Jade AI',line:'Your AI health coach',g:['#3d7a6c','#16463c','#06140f'],i:'spark'},
+  {id:'x',name:'UltrahumanX',line:'Membership included',g:['#e9d8a8','#8a6a2a','#2a1d08'],i:'x'}
+];
+const MAXP=749.99;
+/* ================= derived ================= */
+const SEP=PAID.reduce((a,p)=>a+p.price,0);
+const SAVE=SEP-MAXP, PCT=Math.round(SAVE/SEP*100);
+const TOTAL=FREE.length+PAID.length;
+const inr=n=>'₹'+n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const inr0=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const ALL=[...FREE,...PAID];
+const byId=id=>[...FREE,...PAID,...EXTRA].find(p=>p.id===id);
+
+/* ================= helpers ================= */
+const av=(p,s,cls='')=>`<span class="av ${cls}" style="--s:${s}px;--a:${p.g[0]};--b:${p.g[1]};--c:${p.g[2]}"><svg viewBox="0 0 24 24" aria-hidden="true">${G[p.i]}</svg>${cls.includes('dim')?'<span class="lk"><svg viewBox="0 0 24 24"><rect x="6" y="11" width="12" height="8" rx="2"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/></svg></span>':''}</span>`;
+const orb=(s,label='Max')=>`<span class="orb" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.34)}px">${label}</span>`;
+const chev='<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 1.5L8.5 6 4 10.5"/></svg>';
+const check='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12.5l4.2 4.2L18.5 7.5"/></svg>';
+const lockIc='<svg viewBox="0 0 24 24"><rect x="6" y="11" width="12" height="8" rx="2"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/></svg>';
+
+function car(list,center){
+  const sizes=[40,54,68,92,68,54,40];
+  const mid=3;
+  const items=list.slice(0,7).map((p,i)=>{
+    if(i===mid&&center) return center;
+    const d=Math.abs(i-mid); return av(p,sizes[i]);
+  });
+  return `<div class="car" aria-hidden="true">${items.join('')}</div>`;
+}
+const CAR=[byId('hydration'),byId('afib'),byId('caffeine'),byId('cycle'),byId('cardio'),byId('resp'),byId('migraine')];
+
+function nav(right=''){
+  return `<div class="nav"><button class="back" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+  <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M3 8h26l-5 6H8l-5-6zM9 17h14l-5 8H14l-5-8z"/></svg><div class="slot">${right}</div></div>`;
+}
+function hero(title='Supercharge your Ring AIR experience with Powerplugs',center=null,right=''){
+  return `<div class="hero">${nav(right)}${car(CAR,center)}<h1>${title}</h1></div>`;
+}
+const freeInactive=st=>FREE.filter(p=>!st.act.has(p.id));
+const freeActive=st=>FREE.filter(p=>st.act.has(p.id));
+
+function activeSec(st,title='Active for you'){
+  const a=freeActive(st);
+  return `<section class="sec"><div class="sec-h"><h2>${title}</h2><span class="sub">${a.length} free</span></div>
+  <div class="list">${a.map(p=>`<div class="row">${av(p,44)}<span class="meta"><b>${p.name}</b><i>${p.line}</i></span><span class="tag ok">Active</span></div>`).join('')}</div></section>`;
+}
+function freeHead(st){
+  const n=freeInactive(st).length, all=n&&st.sel.size===n;
+  return `<div class="sec-h"><h2>Free to activate</h2>${n?`<button class="link" data-act="all">${all?'Clear':'Select all'}</button>`:''}</div>
+  <p class="sec-d">${n?'No charge. Pick any and activate them together.':'Every free powerplug is now active.'}</p>`;
+}
+function freeList(st){
+  const l=freeInactive(st);
+  if(!l.length) return `<div class="empty">You have all ${FREE.length} free powerplugs. Nice.</div>`;
+  return `<div class="list" role="group" aria-label="Free powerplugs">${l.map(p=>`<button class="row" role="checkbox" aria-checked="${st.sel.has(p.id)}" data-act="toggle" data-id="${p.id}">${av(p,44)}<span class="meta"><b>${p.name}</b><i>${p.line}</i></span><span class="chk">${check}</span></button>`).join('')}</div>`;
+}
+function freeGrid(st){
+  const l=freeInactive(st);
+  if(!l.length) return `<div class="empty" style="margin-top:10px">You have all ${FREE.length} free powerplugs. Nice.</div>`;
+  return `<div class="grid2" role="group" aria-label="Free powerplugs">${l.map(p=>`<button class="tile" role="checkbox" aria-checked="${st.sel.has(p.id)}" data-act="toggle" data-id="${p.id}">${av(p,42)}<span><b>${p.name}</b><i>${p.line}</i></span><span class="chk">${check}</span></button>`).join('')}</div>`;
+}
+function paidRows(){
+  return `<div class="list">${PAID.map(p=>`<button class="row p" data-act="plug" data-id="${p.id}">${av(p,44,'dim')}<span class="meta"><b>${p.name}</b><i>${p.line}</i></span><span class="price"><b>${inr(p.price)}<small>/mo</small></b><span class="tag off">Inactive</span></span>${chev}</button>`).join('')}</div>`;
+}
+function paidHead(sub){
+  return `<div class="sec-h"><h2>Premium powerplugs</h2><span class="sub">${sub}</span></div>`;
+}
+function dock(st){
+  const n=st.sel.size;
+  const b=n?`<button class="pill blue" data-act="activate">Activate ${n} free</button>`
+    :st.did?`<button class="pill" data-act="skip">Continue</button>`:`<button class="pill" data-act="skip">Skip for now</button>`;
+  return `<div class="dock">${b}</div>`;
+}
+
+/* ================= views ================= */
+const VIEWS={
+ c1:st=>({main:`${hero()}
+  ${activeSec(st)}
+  <section class="sec">${freeHead(st)}${freeList(st)}</section>
+  <section class="sec">${paidHead('Paid · one at a time')}${paidRows()}</section>
+  <section class="sec"><div class="mx"><button class="cap" data-act="max" style="width:100%;background:none;border:0;cursor:pointer"><span>Save ${inr0(SAVE)}/mo with MAX</span>${chev.replace('class="chev"','class="chev" style="stroke:currentColor"')}</button>
+   <div class="in"><div class="top">${orb(56)}<div class="t"><b>Ultrahuman MAX</b><div class="pr">${inr(MAXP)}/mo <s>${inr(SEP)}</s></div></div><button class="pill blue sm" data-act="max">Get bundle</button></div>
+   <div class="inc"><span class="stack">${PAID.map(p=>av(p,26)).join('')}${EXTRA.map(p=>av(p,26)).join('')}</span><span>All ${PAID.length} premium powerplugs, Jade AI and UltrahumanX</span></div></div></div></section>`,
+  dock:dock(st)}),
+
+ c2:st=>({main:`${hero()}
+  ${activeSec(st)}
+  <section class="sec">${freeHead(st)}${freeList(st)}</section>
+  <section class="sec">${paidHead(inr(SEP)+'/mo for all '+PAID.length)}${paidRows()}</section>
+  <section class="sec"><div class="rc">
+    <h3>Buying them one by one vs. MAX</h3>
+    <div class="bars"><div class="bar"><span style="width:100%"></span><em>Separately</em><b>${inr(SEP)}</b></div>
+    <div class="bar mx2"><span style="width:${(MAXP/SEP*100).toFixed(1)}%"></span><em>MAX</em><b>${inr(MAXP)}</b></div></div>
+    <hr>
+    ${PAID.map(p=>`<div class="ln"><span>${p.name}</span><s>${inr(p.price)}</s></div>`).join('')}
+    <div class="ln"><span>Jade AI health coach</span><span class="in">INCLUDED</span></div>
+    <div class="ln"><span>UltrahumanX membership</span><span class="in">INCLUDED</span></div>
+    <hr>
+    <div class="tot"><span>MAX</span><b>${inr(MAXP)}<small>/mo</small></b></div>
+    <span class="sv">You save ${inr(SAVE)} a month · ${PCT}%</span>
+    <button class="pill blue full" data-act="max">Get Ultrahuman MAX</button>
+    <div class="fine">Cancel anytime. Your free powerplugs stay free.</div>
+  </div></section>`,
+  dock:dock(st)}),
+
+ c3:st=>{
+  const done=st.act.size, pend=st.sel.size, from=st.anim?st.anim.from:done;
+  const R=60,C=75,seg=Math.PI*2/TOTAL,gap=.2;
+  let arcs='';
+  for(let i=0;i<TOTAL;i++){
+    const a0=-Math.PI/2+i*seg+gap/2,a1=-Math.PI/2+(i+1)*seg-gap/2;
+    const x0=C+R*Math.cos(a0),y0=C+R*Math.sin(a0),x1=C+R*Math.cos(a1),y1=C+R*Math.sin(a1);
+    const cls=i<done?'on':i<done+pend?'pend':'off';
+    const pop=(st.anim&&i>=from&&i<done)?` pop" style="--d:${(i-from)*90}ms`:'';
+    arcs+=`<path class="seg ${cls}${pop}" d="M${x0.toFixed(2)} ${y0.toFixed(2)}A${R} ${R} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)}"/>`;
+  }
+  const ring=`<div class="ringbox"><svg viewBox="0 0 150 150" role="img" aria-label="${done} of ${TOTAL} powerplugs unlocked">${arcs}</svg>
+   <div class="ringc"><b>${done}<small>/${TOTAL}</small></b><em>Unlocked</em>${pend?`<em class="pn">+${pend} selected</em>`:''}</div></div>`;
+  return {main:`<div class="hero">${nav()}${ring}<h1>Unlock every Powerplug on your Ring AIR</h1><p class="sub">Free ones take one tap. Premium ones finish the ring.</p></div>
+  <section class="sec">${activeHeadC3(st)}</section>
+  <section class="sec">${freeHead(st)}${freeGrid(st)}</section>
+  <section class="sec">${paidHead('Paid · one at a time')}
+   <div class="grid2">${PAID.map(p=>`<button class="tile lk" data-act="plug" data-id="${p.id}">${av(p,42,'dim')}<span><b>${p.name}</b><i>${p.line}</i></span><span class="pr"><b>${inr(p.price)}<small>/mo</small></b><span class="tag off">Inactive</span></span></button>`).join('')}</div></section>
+  <section class="sec"><div class="fin"><span class="lab">Complete the ring</span>
+   <h3>Unlock the last ${PAID.length} and a coach to go with them</h3>
+   <div class="path"><b>${done}</b><i style="--w:${(done/TOTAL*100).toFixed(0)}%"></i><b>${TOTAL}</b></div>
+   <p>MAX adds all ${PAID.length} premium powerplugs, Jade AI and UltrahumanX for ${inr(MAXP)}/mo. That is ${inr0(SAVE)} less than buying them one by one.</p>
+   <button class="pill blue full" data-act="max">Unlock all with MAX</button></div></section>`,
+  dock:dock(st)};
+ },
+
+ c4:st=>({main:`${hero('Everything your Ring AIR can do',null,`<button class="link" data-act="skip" style="color:var(--p-fg)">${st.did?'Done':'Skip'}</button>`)}
+  ${activeSec(st)}
+  <section class="sec">${freeHead(st)}${freeList(st)}</section>
+  <section class="sec">${paidHead('Paid · one at a time')}${paidRows()}</section>
+  <section class="sec"><div class="mhero">${car([byId('resp'),byId('cardio'),byId('afib'),null,byId('cycle'),byId('migraine'),byId('jade')],orb(112))}
+    <h3>Ultrahuman MAX</h3>
+    <div class="pr"><b>${inr(MAXP)}/mo</b><s>${inr(SEP)}</s><span class="chip">Save ${PCT}%</span></div>
+    <span class="chip soft">UltrahumanX membership included</span>
+    <p>Every premium powerplug plus Jade AI, in one plan.</p></div>
+   <div class="incl">${[...PAID,EXTRA[0]].map(p=>`<div class="row">${av(p,36)}<span class="meta"><b>${p.name}</b><i>${p.line}</i></span></div>`).join('')}</div></section>`,
+  dock:`<div class="dock d4">${st.sel.size?`<button class="pill white" data-act="activate">Activate ${st.sel.size} free</button>`:''}
+   <button class="maxbar" data-act="max">${orb(40)}<span class="t"><b>Ultrahuman MAX</b><small>${PAID.length} premium + Jade AI + UltrahumanX</small></span><span class="g">${inr(MAXP)}/mo</span></button></div>`}),
+
+ c5:st=>({main:`${hero()}
+  ${activeSec(st)}
+  <section class="sec">${freeHead(st)}${freeList(st)}</section>
+  <section class="sec">${paidHead('Paid · one at a time')}
+   <div class="rail">${PAID.map(p=>`<button class="pcard" data-act="plug" data-id="${p.id}"><span class="hd">${av(p,56,'dim')}<span class="tag off">Inactive</span></span><span><b>${p.name}</b><i>${p.bullets[0]}</i></span><span class="ft"><span class="price"><b>${inr(p.price)}<small>/mo</small></b></span><span class="get">Get</span></span></button>`).join('')}</div>
+   <div class="dots">Swipe · ${PAID.length} premium powerplugs</div></section>
+  <section class="sec"><div class="mx b5"><div class="cap" style="color:#aab4ff"><span>Best value</span></div>
+   <div class="in"><p>Max costs less than any 3 premium powerplugs, and adds Jade AI and UltrahumanX.</p>
+    <div class="top">${orb(52)}<div class="t"><b>Ultrahuman MAX</b><div class="pr">${inr(MAXP)}/mo <s>${inr(SEP)}</s></div></div></div>
+    <div class="inc"><span class="stack">${PAID.map(p=>av(p,26)).join('')}${EXTRA.map(p=>av(p,26)).join('')}</span><span>${PAID.length} premium + Jade AI + UltrahumanX</span></div>
+    <button class="pill white full" data-act="max">Get Ultrahuman MAX</button></div></div></section>`,
+  dock:dock(st)})
+};
+function activeHeadC3(st){
+  const a=freeActive(st);
+  return `<div class="sec-h"><h2>Active for you</h2><span class="sub">${a.length} free</span></div>
+  <div class="list">${a.map(p=>`<div class="row">${av(p,44)}<span class="meta"><b>${p.name}</b><i>${p.line}</i></span><span class="tag ok">Active</span></div>`).join('')}</div>`;
+}
+
+/* ================= sheets ================= */
+const xbtn='<button class="x" data-act="close" aria-label="Close"><svg viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12"/></svg></button>';
+const tick='<svg viewBox="0 0 24 24"><path d="M5.5 12.5l4.2 4.2L18.5 7.5"/></svg>';
+function plugSheet(s){
+  const p=byId(s.id);
+  return `<div style="display:flex;gap:14px;align-items:center;padding-right:36px">${av(p,64,'dim')}<div><h3>${p.name}</h3><p>${p.line}</p></div></div>
+  <ul>${p.bullets.map(b=>`<li>${tick}<span>${b}</span></li>`).join('')}</ul>
+  <div class="big"><b>${inr(p.price)}</b><span style="color:var(--p-mute)">/mo</span></div>
+  <button class="pill blue full" data-act="buy" data-id="${p.id}">Get for ${inr(p.price)}/mo</button>
+  <button class="alt" data-act="max">Or get everything with <b>MAX for ${inr(MAXP)}/mo</b></button>`;
+}
+function maxSheet(){
+  return `<div style="display:flex;gap:14px;align-items:center;padding-right:36px">${orb(64)}<div><h3>Ultrahuman MAX</h3><p>One plan, everything premium.</p></div></div>
+  <div class="big"><b>${inr(MAXP)}</b><span style="color:var(--p-mute)">/mo</span><s>${inr(SEP)}</s><span class="chip">Save ${PCT}%</span></div>
+  <span class="chip soft" style="align-self:flex-start">UltrahumanX membership included</span>
+  <div class="box">${[...PAID,...EXTRA].map(p=>`<div class="row">${av(p,36)}<span class="meta"><b>${p.name}</b><i>${p.line}</i></span></div>`).join('')}</div>
+  <button class="pill blue full" data-act="buyMax">Get MAX · ${inr(MAXP)}/mo</button>`;
+}
+function compareSheet(s){
+  const p=byId(s.id), ch=s.choice||'max';
+  return `<div style="padding-right:36px"><h3>Get ${p.name}</h3><p style="margin-top:4px">Pick how you want to pay for it.</p></div>
+  <button class="opt" role="radio" aria-checked="${ch==='max'}" data-act="choice" data-id="max"><span class="rd"></span>
+    <span><b>Ultrahuman MAX<span class="badge">Best value</span></b><small>${p.name} plus ${PAID.length-1} more premium powerplugs, Jade AI and UltrahumanX.</small>
+    <span class="stack">${PAID.map(q=>av(q,24)).join('')}${EXTRA.map(q=>av(q,24)).join('')}</span>
+    <span class="nudge">Only ${inr(MAXP-p.price)} more than this one</span></span><span class="pr">${inr(MAXP)}/mo</span></button>
+  <button class="opt" role="radio" aria-checked="${ch==='single'}" data-act="choice" data-id="single"><span class="rd"></span>
+    <span><b>Just this powerplug</b><small>${p.line}</small></span><span class="pr">${inr(p.price)}/mo</span></button>
+  <button class="pill blue full" data-act="confirm" data-id="${p.id}">${ch==='max'?`Continue with MAX · ${inr(MAXP)}/mo`:`Get for ${inr(p.price)}/mo`}</button>`;
+}
+function sheetHTML(c,st){
+  const s=st.sheet; if(!s) return '';
+  const inner=s.t==='max'?maxSheet():c==='c5'?compareSheet(s):plugSheet(s);
+  return `<div class="shw"><div class="bd" data-act="close"></div><div class="sheet" role="dialog" aria-modal="true">${xbtn}<div class="grab"></div>${inner}</div></div>`;
+}
+
+/* ================= phone runtime ================= */
+const sbHTML=`<div class="sb"><span>9:41</span><span class="ic"><svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".5"/><rect x="2" y="2" width="19" height="8" rx="2"/><rect x="23.5" y="4" width="2" height="4" rx="1" opacity=".5"/></svg></span></div>`;
+const STATE={};
+const init=()=>({sel:new Set(),act:new Set(START_ACTIVE),sheet:null,toast:null,did:false,anim:null});
+
+function mount(host,c){
+  const st=STATE[c]||(STATE[c]=init());
+  const render=()=>{
+    const old=host.querySelector('.scroll'), top=old?old.scrollTop:0;
+    const rail=host.querySelector('.rail'), rl=rail?rail.scrollLeft:0;
+    const v=VIEWS[c](st);
+    host.innerHTML=sbHTML+`<div class="scroll">${v.main}</div>${v.dock||''}${sheetHTML(c,st)}${st.toast?`<div class="toast" role="status">${st.toast}</div>`:''}`;
+    const n=host.querySelector('.scroll'); n.scrollTop=top;
+    const r2=host.querySelector('.rail'); if(r2) r2.scrollLeft=rl;
+    st.anim=null;
+  };
+  const say=msg=>{st.toast=msg;render();setTimeout(()=>{if(st.toast===msg){st.toast=null;render();}},2400);};
+  host.addEventListener('click',e=>{
+    const t=e.target.closest('[data-act]'); if(!t||!host.contains(t)) return;
+    const a=t.dataset.act,id=t.dataset.id;
+    if(a==='toggle'){st.sel.has(id)?st.sel.delete(id):st.sel.add(id);render();}
+    else if(a==='all'){const l=freeInactive(st);if(st.sel.size===l.length)st.sel.clear();else l.forEach(p=>st.sel.add(p.id));render();}
+    else if(a==='activate'){const n=st.sel.size,from=st.act.size;st.sel.forEach(i=>st.act.add(i));st.sel.clear();st.did=true;st.anim={from};say(n===1?'1 powerplug activated':n+' powerplugs activated');}
+    else if(a==='skip'){say('Demo: this would continue to the home screen');}
+    else if(a==='plug'){st.sheet={t:'plug',id,choice:'max'};render();}
+    else if(a==='max'){st.sheet={t:'max'};render();}
+    else if(a==='close'){st.sheet=null;render();}
+    else if(a==='choice'){st.sheet.choice=id;render();}
+    else if(a==='buy'){const p=byId(id);st.sheet=null;say('Demo: checkout for '+p.name.replace('&amp;','&')+' · '+inr(p.price));}
+    else if(a==='buyMax'){st.sheet=null;say('Demo: checkout for Ultrahuman MAX · '+inr(MAXP));}
+    else if(a==='confirm'){const ch=st.sheet.choice||'max',p=byId(id);st.sheet=null;say(ch==='max'?'Demo: checkout for Ultrahuman MAX · '+inr(MAXP):'Demo: checkout for '+p.name.replace('&amp;','&')+' · '+inr(p.price));}
+  });
+  render();
+}
+
+/* ================= gallery ================= */
+const IDEAS=[
+ {id:'c1',name:'Clean Ledger',idea:'Your current layout, tightened. A sticky pill changes with context: Skip for now, then Activate N free once something is checked, then Continue. The MAX card closes the page with a savings label and one blue button.',how:'Sequence does the selling. People activate free plugs, feel the value, then see the premium list and the bundle that covers it.',best:'Safest first release. Smallest change from the Figma you shared.',trade:'MAX is a single card at the very bottom, so people who never scroll never see it.'},
+ {id:'c2',name:'Price Ledger',idea:'Anchors the price before it reveals the bundle. The premium header states what all five cost separately, and the closing card is a receipt: every plug struck through, Jade AI and UltrahumanX marked INCLUDED, then the MAX total and the monthly saving.',how:'Anchoring and a visible bar comparison. The saving is shown as a number, not a claim.',best:'Rational buyers who compare prices. Works well when the saving is large.',trade:'Needs accurate pricing at all times. A long receipt is heavy on small screens.'},
+ {id:'c3',name:'Unlock Ring',idea:'A segmented ring counts powerplugs unlocked (2 of 11). Selected free plugs preview as pending segments, and activating them fills the ring with a short animation. Premium plugs sit as locked tiles. MAX is framed as the way to finish the ring.',how:'Goal-gradient effect. The free step creates visible progress, which makes the remaining segments feel close.',best:'Engagement and discovery. Gives the free activation a payoff of its own.',trade:'Treats premium as part of a collection, so it suits people who like completing things more than people who buy on price.'},
+ {id:'c4',name:'Max Dock',idea:'A dark, premium treatment with a MAX bar pinned to the bottom the whole time. The free Activate button appears above it when something is checked. The end of the page is a full MAX hero in the style of your inspiration screen, with the bundle contents listed.',how:'Constant visibility. MAX is one tap away from every scroll position, and the hero carries the full pitch.',best:'Maximising bundle starts. Matches the MAX product page you shared.',trade:'Most pushy of the five. Two competing CTAs at the bottom, so the free flow can feel secondary.'},
+ {id:'c5',name:'Smart Sheet',idea:'Premium plugs become swipeable cards. Tapping one opens a choice sheet: this plug alone, or MAX with the difference spelled out ("Only ₹400.00 more than this one"). MAX is pre-selected. The bundle card at the end uses a concrete claim: cheaper than any three premium plugs.',how:'Upsell at the moment of intent. The person already wants one plug, so the bundle is shown as a small step up.',best:'Converting people who were going to buy a single plug anyway.',trade:'Adds a step before single-plug checkout. Some people will find the pre-selected bundle pushy.'}
+];
+const tabs=document.getElementById('tabs'),stage=document.getElementById('stage');
+let cur='c1';
+function drawTabs(){
+  tabs.innerHTML=IDEAS.map((d,i)=>`<button class="tab" role="tab" aria-selected="${cur===d.id}" data-id="${d.id}"><span class="n">${i+1}</span>${d.name}</button>`).join('')+`<button class="tab all" role="tab" aria-selected="${cur==='all'}" data-id="all">Compare all</button>`;
+}
+function draw(){
+  drawTabs();
+  if(cur==='all'){
+    stage.innerHTML=`<div class="grid5">${IDEAS.map((d,i)=>`<figure><div class="ph" data-c="${d.id}"></div><figcaption><span>${i+1}</span>${d.name}</figcaption></figure>`).join('')}</div>`;
+    IDEAS.forEach(d=>mount(stage.querySelector(`.ph[data-c="${d.id}"]`),d.id));
+  }else{
+    const d=IDEAS.find(x=>x.id===cur), i=IDEAS.indexOf(d);
+    stage.innerHTML=`<div class="single"><div class="ph" data-c="${d.id}"></div>
+    <div class="panel"><span class="eyebrow">Ideation ${i+1} of ${IDEAS.length}</span><h2>${d.name}</h2><p>${d.idea}</p>
+    <dl><div><dt>Why it upsells</dt><dd>${d.how}</dd></div><div><dt>Best for</dt><dd>${d.best}</dd></div><div><dt>Trade-off</dt><dd>${d.trade}</dd></div></dl>
+    <p class="note">Try it: check a few free powerplugs and activate them, then tap a premium plug and the MAX button.</p></div></div>`;
+    mount(stage.querySelector('.ph'),d.id);
+  }
+}
+tabs.addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;cur=t.dataset.id;draw();});
+draw();
+</script>
