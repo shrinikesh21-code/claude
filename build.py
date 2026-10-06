@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-"""Build portfolio.html from PORTFOLIO.md. Standard library only.
+"""Build portfolio.html, one self-contained file, from PORTFOLIO.md. Standard library only.
 
 Usage: python3 build.py
-Reads PORTFOLIO.md and writes portfolio.html plus one page per project in case-studies/. Image paths stay relative,
-so the folder can be zipped and moved anywhere.
+Reads PORTFOLIO.md and writes portfolio.html. The overview and every case study live in that one
+file (case studies open in-page at #case/<id>) and each image is embedded once, so the file opens
+anywhere with no folder next to it. Source images stay in assets/ for rebuilding.
 """
+import base64
 import html
+import json
+import mimetypes
 import re
 import sys
 from pathlib import Path
@@ -13,7 +17,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "PORTFOLIO.md"
 OUT = ROOT / "portfolio.html"
-CASES = ROOT / "case-studies"
 PRIORITIES = ["P1", "P2", "P3"]
 SECTIONS = {"context", "problem", "process", "solution", "outcome", "learnings", "metrics", "screens", "to fill in"}
 
@@ -138,7 +141,7 @@ def project_html(p, idx):
     {outcome_html}
     <div class="tags">{tags}</div>
     {f'<p class="tools">Tools · {tools}</p>' if tools else ''}
-    <a class="more" href="case-studies/{esc(p.get('id', pid))}.html">Read case study <span>→</span></a>
+    <a class="more" href="#case/{esc(p.get('id', pid))}">Read case study <span>→</span></a>
   </div>
   {shots}
 </article>"""
@@ -148,6 +151,7 @@ CSS = """
 :root{--bg:#f1f1f1;--card:#fff;--ink:#0d0d0d;--mute:#9a9a9a;--line:#e8e8e8;--soft:#f6f6f6;--dark:#1b1b1b;--ok:#2fbf4a}
 @media (prefers-color-scheme:dark){:root{--bg:#0e0e0e;--card:#1a1a1a;--ink:#f3f3f3;--mute:#7d7d7d;--line:#2a2a2a;--soft:#222;--dark:#000}}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Helvetica Neue",-apple-system,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
 .wrap{max-width:1180px;margin:0 auto;padding:48px 24px 80px}
 h1,h2,h3,h4{letter-spacing:-.035em;line-height:1.05;margin:0}
@@ -207,7 +211,7 @@ footer{margin-top:64px;color:var(--mute);font-size:13px;display:flex;justify-con
 JS = """
 document.querySelectorAll('.thumb').forEach(function(b){b.addEventListener('click',function(){
   var id=b.dataset.target,img=document.getElementById(id+'-main'),cap=document.getElementById(id+'-cap');
-  img.src=b.dataset.src;img.alt=b.dataset.cap;if(cap)cap.textContent=b.dataset.cap;
+  img.src=I(b.dataset.src);img.alt=b.dataset.cap;if(cap)cap.textContent=b.dataset.cap;
   b.parentNode.querySelectorAll('.thumb').forEach(function(t){t.classList.toggle('on',t===b)});
 });});
 """
@@ -267,7 +271,7 @@ CASE_CSS = """
 CASE_JS = """
 var lb=document.getElementById('lb'),lbi=lb.querySelector('img');
 document.querySelectorAll('.tile').forEach(function(t){t.addEventListener('click',function(){
-  lbi.src=t.dataset.src;lbi.alt=t.dataset.cap;lb.classList.add('on');});});
+  lbi.src=I(t.dataset.src);lbi.alt=t.dataset.cap;lb.classList.add('on');});});
 lb.addEventListener('click',function(){lb.classList.remove('on');});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on');});
 """
@@ -282,8 +286,8 @@ def ordered(projects):
     )
 
 
-def case_page(profile, p, projects):
-    """One case study page. Lives in case-studies/, so asset paths get a ../ prefix."""
+def case_view(profile, p, projects):
+    """One case study view, shown in-page when the URL hash is #case/<id>."""
     role = p.get("role") or profile.get("role", "")
     company = profile.get("company", "")
     facts = [
@@ -298,8 +302,8 @@ def case_page(profile, p, projects):
     gallery = ""
     if shots:
         tiles = "".join(
-            f'<button class="tile" data-src="../{esc(src)}" data-cap="{esc(cap)}">'
-            f'<img src="../{esc(src)}" alt="{esc(cap or p["title"])}" loading="lazy">'
+            f'<button class="tile" data-src="{esc(src)}" data-cap="{esc(cap)}">'
+            f'<img src="{esc(src)}" alt="{esc(cap or p["title"])}" loading="lazy">'
             f'{f"<span>{esc(cap)}</span>" if cap else ""}</button>'
             for src, cap in shots
         )
@@ -336,24 +340,47 @@ def case_page(profile, p, projects):
     if nxt:
         nxt_html = (
             f'<div><small>Next project</small><h3>{esc(nxt["title"])}</h3></div>'
-            f'<a class="more" href="{esc(nxt.get("id", ""))}.html">Read case study <span>→</span></a>'
+            f'<a class="more" href="#case/{esc(nxt.get("id", ""))}">Read case study <span>→</span></a>'
         )
     else:
-        nxt_html = '<div><small>That is all for now</small><h3>Back to all work</h3></div><a class="more" href="../portfolio.html">Portfolio <span>→</span></a>'
+        nxt_html = '<div><small>That is all for now</small><h3>Back to all work</h3></div><a class="more" href="#">Portfolio <span>→</span></a>'
 
-    title = f"{p['title']} · {company} case study" if company else p["title"]
     sub = f'<p class="sub">{inline(p["summary"])}</p>' if p.get("summary") else ""
-    return f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(title)}</title>{FONTS}
-<style>{CSS}{CASE_CSS}</style></head><body><div class="wrap">
-<nav class="nav"><a class="pill" href="../portfolio.html">← Portfolio</a><span class="pill">Case study</span></nav>
+    return f"""<div class="wrap" data-view="{esc(p['id'])}" hidden>
+<nav class="nav"><a class="pill" href="#">← Portfolio</a><span class="pill">Case study</span></nav>
 <header class="c-hero"><div class="meta">{status}{tags}</div><h1>{esc(p['title'])}</h1>{sub}</header>
 <div class="facts">{facts_html}</div>
 {body}
 <section class="next">{nxt_html}</section>
 <footer><span>{esc(profile.get('title', ''))}</span><span>Updated {esc(profile.get('updated', ''))}</span></footer>
-</div><div class="lb" id="lb"><img alt=""></div><script>{CASE_JS}</script></body></html>"""
+</div>"""
+
+
+ROUTER = """
+function route(){var m=location.hash.match(/^#case\\/(.+)$/),id=m?decodeURIComponent(m[1]):'home',hit=false;
+  var views=document.querySelectorAll('[data-view]');
+  views.forEach(function(v){if(v.dataset.view===id)hit=true;});
+  views.forEach(function(v){v.hidden=hit?v.dataset.view!==id:v.dataset.view!=='home';});
+  window.scrollTo(0,0);}
+window.addEventListener('hashchange',route);route();
+"""
+
+
+def embed(page):
+    """Embed each referenced image once: <img src=assets/x> becomes <img data-img=assets/x> and a JS map holds the data."""
+    page = re.sub(r'(?<![-\w])src="(assets/[^"]+)"', r'data-img="\1"', page)
+    paths = sorted(set(re.findall(r'(?:data-img|data-src)="(assets/[^"]+)"', page)))
+    images = {}
+    for rel in paths:
+        f = ROOT / html.unescape(rel)
+        if f.exists():
+            mime = mimetypes.guess_type(f.name)[0] or "application/octet-stream"
+            images[rel] = f"data:{mime};base64," + base64.b64encode(f.read_bytes()).decode()
+    script = (
+        "var IMG=" + json.dumps(images) + ";function I(p){return IMG[p]||p}"
+        "document.querySelectorAll('img[data-img]').forEach(function(i){i.src=I(i.dataset.img)});"
+    )
+    return page.replace("{IMGSCRIPT}", script)
 
 
 def build(profile, projects):
@@ -375,12 +402,13 @@ def build(profile, projects):
         for n, label, dark in stats
     )
     cards = "".join(project_html(p, i) for i, p in enumerate(projects))
+    views = "".join(case_view(profile, p, projects) for p in projects if p.get("id"))
     who = f"{esc(name)} · " if name else ""
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(profile.get('title', 'Portfolio'))}</title>
 {FONTS}
-<style>{CSS}</style></head><body><div class="wrap">
+<style>{CSS}{CASE_CSS}</style></head><body><div class="wrap" data-view="home">
 <header class="hero"><div><span class="pill">{who}{esc(role)}{' · ' + esc(company) if company else ''}</span>
 <h1>{esc(role)}{' at ' + esc(company) if company else ''}.<br><span>{esc(profile.get('tagline', ''))}</span></h1></div>
 <p>Selected work, ordered by importance. Newest and highest-impact projects come first.</p></header>
@@ -388,7 +416,10 @@ def build(profile, projects):
 <div class="section-head"><h2>What I've built</h2><span class="pill">Case studies</span></div>
 <main class="cases">{cards}</main>
 <footer><span>Source: PORTFOLIO.md</span><span>Updated {esc(profile.get('updated', ''))}</span></footer>
-</div><script>{JS}</script></body></html>"""
+</div>
+{views}
+<div class="lb" id="lb"><img alt=""></div>
+<script>{{IMGSCRIPT}}{JS}{CASE_JS}{ROUTER}</script></body></html>"""
 
 
 def main():
@@ -401,16 +432,11 @@ def main():
             if not (ROOT / src).exists():
                 print(f"warning: missing file {src} in '{p['title']}'", file=sys.stderr)
     projects = ordered(projects)
-    OUT.write_text(build(profile, projects), encoding="utf-8")
-    CASES.mkdir(exist_ok=True)
-    for stale in CASES.glob("*.html"):
-        stale.unlink()
     for p in projects:
         if not p.get("id"):
-            print(f"warning: '{p['title']}' has no id, so no case study page was built", file=sys.stderr)
-            continue
-        (CASES / f"{p['id']}.html").write_text(case_page(profile, p, projects), encoding="utf-8")
-    print(f"built {OUT.name} and {len(projects)} case study page(s)")
+            print(f"warning: '{p['title']}' has no id, so it has no case study view", file=sys.stderr)
+    OUT.write_text(embed(build(profile, projects)), encoding="utf-8")
+    print(f"built {OUT.name}: {len(projects)} project(s), {OUT.stat().st_size / 1e6:.1f} MB")
 
 
 if __name__ == "__main__":
