@@ -128,7 +128,7 @@ def project_html(p, idx):
     has_shots = bool(pairs(p["sections"].get("screens", "")))
     shots = f'<div class="shots">{screens_html(p, pid)}</div>' if has_shots else ""
     return f"""
-<article class="case {prio.lower()}{'' if has_shots else ' noshots'}" id="{esc(p.get('id', pid))}">
+<article class="case {prio.lower()}{'' if has_shots else ' noshots'}{' phone' if p.get('layout') == 'phone' else ''}" id="{esc(p.get('id', pid))}">
   <div class="copy">
     <div class="meta"><span class="pill">{esc(prio)}</span>{status}</div>
     <h3>{esc(p['title'])}</h3>
@@ -185,7 +185,7 @@ h1,h2,h3,h4{letter-spacing:-.035em;line-height:1.05;margin:0}
 .more:hover{transform:translateY(-1px)}
 .shots{background:var(--soft);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;min-height:420px}
 .stage{flex:1;display:grid;place-items:center;position:relative;min-height:300px}
-.stage img{width:min(100%,460px);aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.18))}
+.stage img{width:auto;max-width:100%;max-height:520px;height:auto;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.18))}
 .stage .cap{position:absolute;left:4px;bottom:0;font-size:13px;font-weight:600;letter-spacing:-.01em}
 .stage.empty{color:var(--mute);font-size:14px}
 .thumbs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
@@ -194,8 +194,10 @@ h1,h2,h3,h4{letter-spacing:-.035em;line-height:1.05;margin:0}
 .thumb.on,.thumb:hover{border-color:var(--ink)}
 .case.p2 .shots{min-height:300px}
 .case.p2 .stage{min-height:200px}
-.case.p2 .stage img{width:min(100%,280px)}
+.case.p2 .stage img{max-height:400px}
 .case.noshots{grid-template-columns:1fr}
+.case.phone .stage img{max-height:560px;border-radius:30px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35);filter:none}
+.case.phone.p2 .stage img{max-height:520px}
 .case.p3{grid-template-columns:1fr;padding:6px}
 .case.p3 .shots,.case.p3 .body,.case.p3 .outcome{display:none}
 footer{margin-top:64px;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -230,6 +232,16 @@ CASE_CSS = """
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));gap:14px;align-items:start}
 .tile{background:var(--soft);border:0;border-radius:24px;padding:26px 26px 20px;display:flex;flex-direction:column;gap:16px;cursor:zoom-in;font:inherit;color:inherit;text-align:left;transition:.25s}
 .tile:hover{transform:translateY(-3px)}
+.split{display:grid;grid-template-columns:1fr minmax(300px,400px);gap:32px;align-items:start;margin-top:14px}
+.split .story{margin-top:0}
+.split .row{grid-template-columns:1fr;gap:14px;padding:30px 0}
+.split .row.dark{padding:32px}
+.split .cstats{grid-template-columns:1fr 1fr}
+.gallery.phone{padding:14px}
+.gallery.phone .tiles{grid-template-columns:1fr}
+.gallery.phone .tile{padding:14px 14px 12px}
+@media (max-width:860px){.split{grid-template-columns:1fr}.gallery.phone{order:-1;max-width:420px;width:100%;justify-self:center}}
+.gallery.phone .tile img{border-radius:28px;filter:drop-shadow(0 24px 30px rgba(0,0,0,.22))}
 .tile img{width:100%;height:auto;display:block;filter:drop-shadow(0 22px 26px rgba(0,0,0,.2))}
 .tile span{font-size:14px;font-weight:600;letter-spacing:-.01em}
 .story{margin-top:64px}
@@ -291,7 +303,8 @@ def case_page(profile, p, projects):
             f'{f"<span>{esc(cap)}</span>" if cap else ""}</button>'
             for src, cap in shots
         )
-        gallery = f'<section class="gallery"><div class="tiles">{tiles}</div></section>'
+        kind = " phone" if p.get("layout") == "phone" else ""
+        gallery = f'<section class="gallery{kind}"><div class="tiles">{tiles}</div></section>'
 
     rows = ""
     for key, label in STORY:
@@ -313,6 +326,11 @@ def case_page(profile, p, projects):
         else ""
     )
 
+    if shots and p.get("layout") == "phone":
+        body = f'<div class="split"><div>{story}{cstats}</div>{gallery}</div>'
+    else:
+        body = f"{gallery}{story}{cstats}"
+
     idx = projects.index(p)
     nxt = projects[idx + 1] if idx + 1 < len(projects) else None
     if nxt:
@@ -332,7 +350,7 @@ def case_page(profile, p, projects):
 <nav class="nav"><a class="pill" href="../portfolio.html">← Portfolio</a><span class="pill">Case study</span></nav>
 <header class="c-hero"><div class="meta">{status}{tags}</div><h1>{esc(p['title'])}</h1>{sub}</header>
 <div class="facts">{facts_html}</div>
-{gallery}{story}{cstats}
+{body}
 <section class="next">{nxt_html}</section>
 <footer><span>{esc(profile.get('title', ''))}</span><span>Updated {esc(profile.get('updated', ''))}</span></footer>
 </div><div class="lb" id="lb"><img alt=""></div><script>{CASE_JS}</script></body></html>"""

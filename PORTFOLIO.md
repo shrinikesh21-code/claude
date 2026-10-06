@@ -45,3 +45,30 @@ All five finishes are live on the official Ultrahuman product pages: Aster Black
 - Process: references used, how many iterations, how the textures were matched to the physical rings
 - Team: who you worked with (product, engineering, 3D, marketing)
 - Rough timeline
+
+## Powerplugs upsell in the onboarding flow
+- id: powerplugs-onboarding-upsell
+- priority: P2
+- added: 2026-10-06
+- tags: Onboarding, Upsell, Monetisation, Mobile app
+- role: Product Designer
+- layout: phone
+- summary: An upsell step in the Ultrahuman app onboarding that offers Powerplugs, the add-ons for the ring.
+
+### Context
+Powerplugs are add-ons for the ring. This step offers them to the user during onboarding of their Ring AIR.
+
+### Solution
+A single screen that splits Powerplugs into two groups. **Free to activate** lists four Powerplugs the user can switch on straight away. **Paid Powerplugs** lists eight more, with a featured Ultrahuman MAX bundle card on top that shows the saving and a "Get bundle" button. The main action is "Activate all", with "Skip for now" as the secondary option.
+
+### Metrics
+
+### Screens
+- assets/powerplugs-onboarding-upsell/onboarding-upsell.webp | Onboarding upsell screen
+
+### To fill in
+- Status: is this shipped and live, or still a concept? (the screen text still has placeholder copy)
+- Impact: take rate of free Powerplugs, bundle purchases, revenue, effect on onboarding completion
+- The problem or goal this was designed against
+- Other screens: bundle detail, the state after "Activate all", the skipped path
+- Tools used, timeline and team

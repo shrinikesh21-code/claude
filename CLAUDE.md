@@ -33,6 +33,7 @@ role / company / tagline / updated: YYYY-MM-DD
 - tools: comma, separated
 - timeline: optional, for example "Mar to May 2026"
 - team: optional, for example "with PM, engineering and brand"
+- layout: optional, `phone` for tall mobile screenshots (portfolio card shows the phone, case study puts the story and the screens side by side). Leave out for square or wide images.
 - summary: one or two sentences
 
 ### Context        free text, paragraphs or "- " bullets

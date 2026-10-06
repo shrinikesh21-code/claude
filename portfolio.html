@@ -43,7 +43,7 @@ h1,h2,h3,h4{letter-spacing:-.035em;line-height:1.05;margin:0}
 .more:hover{transform:translateY(-1px)}
 .shots{background:var(--soft);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;min-height:420px}
 .stage{flex:1;display:grid;place-items:center;position:relative;min-height:300px}
-.stage img{width:min(100%,460px);aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.18))}
+.stage img{width:auto;max-width:100%;max-height:520px;height:auto;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.18))}
 .stage .cap{position:absolute;left:4px;bottom:0;font-size:13px;font-weight:600;letter-spacing:-.01em}
 .stage.empty{color:var(--mute);font-size:14px}
 .thumbs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
@@ -52,8 +52,10 @@ h1,h2,h3,h4{letter-spacing:-.035em;line-height:1.05;margin:0}
 .thumb.on,.thumb:hover{border-color:var(--ink)}
 .case.p2 .shots{min-height:300px}
 .case.p2 .stage{min-height:200px}
-.case.p2 .stage img{width:min(100%,280px)}
+.case.p2 .stage img{max-height:400px}
 .case.noshots{grid-template-columns:1fr}
+.case.phone .stage img{max-height:560px;border-radius:30px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35);filter:none}
+.case.phone.p2 .stage img{max-height:520px}
 .case.p3{grid-template-columns:1fr;padding:6px}
 .case.p3 .shots,.case.p3 .body,.case.p3 .outcome{display:none}
 footer{margin-top:64px;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -62,7 +64,7 @@ footer{margin-top:64px;color:var(--mute);font-size:13px;display:flex;justify-con
 <header class="hero"><div><span class="pill">Product Designer · Ultrahuman</span>
 <h1>Product Designer at Ultrahuman.<br><span>A running log of shipped work.</span></h1></div>
 <p>Selected work, ordered by importance. Newest and highest-impact projects come first.</p></header>
-<section class="stats"><div class="stat dark"><small>Projects</small><b>1</b></div><div class="stat"><small>Screens &amp; assets</small><b>5</b></div><div class="stat"><small>Live in production</small><b>1</b></div><div class="stat"><small>Tools used</small><b>2</b></div></section>
+<section class="stats"><div class="stat dark"><small>Projects</small><b>2</b></div><div class="stat"><small>Screens &amp; assets</small><b>6</b></div><div class="stat"><small>Live in production</small><b>1</b></div><div class="stat"><small>Tools used</small><b>2</b></div></section>
 <div class="section-head"><h2>What I've built</h2><span class="pill">Case studies</span></div>
 <main class="cases">
 <article class="case p1" id="ring-colour-swatches">
@@ -78,6 +80,20 @@ footer{margin-top:64px;color:var(--mute);font-size:13px;display:flex;justify-con
     <a class="more" href="case-studies/ring-colour-swatches.html">Read case study <span>→</span></a>
   </div>
   <div class="shots"><div class="stage"><img id="p0-main" src="assets/ring-colour-swatches/aster-black.svg" alt="Aster Black"><span class="cap" id="p0-cap">Aster Black</span></div><div class="thumbs"><button class="thumb on" data-target="p0" data-src="assets/ring-colour-swatches/aster-black.svg" data-cap="Aster Black" aria-label="Aster Black"><img src="assets/ring-colour-swatches/aster-black.svg" alt="" loading="lazy"></button><button class="thumb" data-target="p0" data-src="assets/ring-colour-swatches/bionic-gold.svg" data-cap="Bionic Gold" aria-label="Bionic Gold"><img src="assets/ring-colour-swatches/bionic-gold.svg" alt="" loading="lazy"></button><button class="thumb" data-target="p0" data-src="assets/ring-colour-swatches/brushed-rose-gold.svg" data-cap="Brushed Rose Gold" aria-label="Brushed Rose Gold"><img src="assets/ring-colour-swatches/brushed-rose-gold.svg" alt="" loading="lazy"></button><button class="thumb" data-target="p0" data-src="assets/ring-colour-swatches/matte-grey.svg" data-cap="Matte Grey" aria-label="Matte Grey"><img src="assets/ring-colour-swatches/matte-grey.svg" alt="" loading="lazy"></button><button class="thumb" data-target="p0" data-src="assets/ring-colour-swatches/raw-titanium.svg" data-cap="Raw Titanium" aria-label="Raw Titanium"><img src="assets/ring-colour-swatches/raw-titanium.svg" alt="" loading="lazy"></button></div></div>
+</article>
+<article class="case p2 phone" id="powerplugs-onboarding-upsell">
+  <div class="copy">
+    <div class="meta"><span class="pill">P2</span></div>
+    <h3>Powerplugs upsell in the onboarding flow</h3>
+    <p class="lead">An upsell step in the Ultrahuman app onboarding that offers Powerplugs, the add-ons for the ring.</p>
+    
+    <div class="body"><p>Powerplugs are add-ons for the ring. This step offers them to the user during onboarding of their Ring AIR.</p></div>
+    
+    <div class="tags"><span class="pill">Onboarding</span><span class="pill">Upsell</span><span class="pill">Monetisation</span><span class="pill">Mobile app</span></div>
+    
+    <a class="more" href="case-studies/powerplugs-onboarding-upsell.html">Read case study <span>→</span></a>
+  </div>
+  <div class="shots"><div class="stage"><img id="p1-main" src="assets/powerplugs-onboarding-upsell/onboarding-upsell.webp" alt="Onboarding upsell screen"><span class="cap" id="p1-cap">Onboarding upsell screen</span></div></div>
 </article></main>
 <footer><span>Source: PORTFOLIO.md</span><span>Updated 2026-10-06</span></footer>
 </div><script>
