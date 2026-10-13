@@ -1,6 +1,6 @@
 ---
 name: cleanwheels-thumbnail-prompts
-description: Writes ready-to-paste ChatGPT image prompts for Cleanwheels (mobile car detailing) before/after Instagram thumbnails, 9:16, dark "Blvck" filter look with lime accent, catchy header plus logo, car at a premium home at night. Use when the user gives a car model (optionally with a photo of the detailed car) and wants a thumbnail prompt. Never generates images itself.
+description: Writes ready-to-paste ChatGPT image prompts for Cleanwheels (mobile car detailing) before/after Instagram thumbnails, 9:16, locked dark "Blvck" filter look with lime accent, catchy header plus logo, car at a premium home at night. Use when the user gives a car model (optionally with a photo of the detailed car) and wants a thumbnail prompt. Never generates images itself.
 ---
 
 
@@ -35,8 +35,12 @@ Nothing else unless they ask for changes.
 - Blur licence plates. Photorealistic, high-end automotive photography, not cartoonish.
 - If the user's photo shows a car different from the model they typed, ask once which is right.
 
-## LOCKED STYLE
-Style 1, Classic Split: one perfect vertical split down the middle with a thin white divider, dirty BEFORE on the left, clean AFTER on the right, front three-quarter view, header on top, logo bottom-center. Use the exact Style 1 prompt in `references/styles.md` as the template, swapping in the car model and colour. Other styles only if the user asks ("style 3").
+## LOCKED STYLE (approved by the user, do not change unless they ask)
+- **Layout:** Style 1, Classic Split. One perfect vertical split with a thin white divider, dirty BEFORE left, clean AFTER right, front three-quarter view. Use the exact Style 1 prompt in `references/styles.md` as the template, swapping in the car model, its description and colour.
+- **Theme:** the dark "Blvck" filter. Low-key, crushed blacks, desaturated, teal-black shadows, film grain, vignette, rim light. Night-time premium home carport. Top and bottom fade to pure black. Lime (#C8FF00) is the only saturated colour.
+- **Text:** header (white "DETAILING" over the car name in lime) plus the logo. Nothing else.
+- **Format:** 9:16, 1080x1920.
+Other layouts (styles 2-5) only if the user asks ("style 3"); they keep the same dark theme.
 
 ## Edits
 If the user says "make the dirt heavier", "different background", "change the header", return the full updated prompt, not a diff.

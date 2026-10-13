@@ -1,5 +1,7 @@
 # 5 Thumbnail Style Directions (v4, dark)
 
+> **LOCKED: the dark "Blvck" theme is approved and applies to every style. Style 1 (Classic Split) is the default.**
+
 v4 changes: **dark "Blvck" filter** look (low-key, crushed blacks, desaturated, grain, vignette), night-time premium home carport, black fades behind the header and logo, lime as the only colour. Still 9:16, header + logo only.
 
 Attach `logo/cleanwheels-logo.png` (lime on transparent) every time. Optional: a photo of the finished car, and a reference photo of the parking setting.

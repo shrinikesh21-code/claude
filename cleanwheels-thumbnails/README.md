@@ -13,8 +13,8 @@ Claude writes the prompt. You paste it into ChatGPT and attach the images.
 3. Open ChatGPT in image mode, attach the logo (and your photo), paste the prompt.
 4. Ask for tweaks in either place. If the logo comes out wrong, say "use the attached logo exactly, do not redraw it".
 
-## First step now
-Style 1 (Classic Split, 9:16, dark "Blvck" lime brand, header + logo, premium home carport) is locked. Alternates are in `styles.md`.
+## Locked
+Dark "Blvck" theme + Style 1 (Classic Split), 9:16, lime header + logo, premium home carport at night. Approved. Alternates in `styles.md` keep the same dark theme.
 
 ## Skill version
 `skill/cleanwheels-thumbnail-prompts.zip` is the same project packaged as a Claude skill (Settings > Capabilities > Skills > Upload). Use it instead of, or alongside, the Project.

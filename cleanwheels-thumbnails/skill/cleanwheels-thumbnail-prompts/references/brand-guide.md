@@ -1,5 +1,7 @@
 # Cleanwheels Brand Guide (for thumbnails)
 
+> **LOCKED: dark "Blvck" theme, Classic Split layout, 9:16, header + logo only.** Approved by the user. Do not drift from it.
+
 **Business:** Mobile car detailing (the latest poster says Mysore, doorstep service). Our detailing van comes to the customer's home and we wash and detail the car in their driveway. That is the selling point, so thumbnails should hint at it ("We come to you").
 
 ## Logo
