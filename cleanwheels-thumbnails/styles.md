@@ -1,94 +1,68 @@
-# 5 Thumbnail Style Directions
+# 5 Thumbnail Style Directions (v2)
 
-Each style is a layout recipe. The Claude Project fills in the car model and writes a full ChatGPT prompt from it. Pick one and tell me which, and I'll lock it into `PROJECT_INSTRUCTIONS.md`.
+Changes from v1: vertical **9:16** (Instagram thumbnail), **no text except the logo**, and the car is parked at a **premium private home** (modern covered carport, timber slat ceiling, stone floor, greenery), not a street.
 
-| # | Name | Layout | Headline | Mood |
-|---|---|---|---|---|
-| 1 | Classic Split | Vertical split, dirty left, clean right, thin white divider | REVIVE YOUR RIDE | Clean, familiar, safest |
-| 2 | Diagonal + Van | Angled split with the Cleanwheels van parked in a home driveway behind the car | WE COME TO YOU | Sells the mobile service |
-| 3 | Stacked | Before on top, after below, BEFORE / AFTER chips | Car model as headline | Bold, scroll-stopping |
-| 4 | Driveway Scene | Full-bleed suburban house, car mid-detail, small before inset | DETAILED AT YOUR DOOR | Lifestyle, trust |
-| 5 | Minimal Black | Black studio, blue accent line, car model in huge type, two small photo chips | Car model | Premium, luxury look |
+Attach `logo/cleanwheels-logo.png` every time. Optional: attach a photo of the finished car, and a reference photo of the parking setting you like.
 
-## Sample prompts (example car: Toyota Fortuner)
+| # | Name | Layout |
+|---|---|---|
+| 1 | Classic Split (LOCKED) | Vertical split, dirty left, clean right, thin white divider, logo bottom-center |
+| 2 | Diagonal | Angled split, same car, same carport |
+| 3 | Stacked | Before on top, after below, thin blue line between |
+| 4 | Detailer at Work | Full-bleed after shot, detailer buffing the car, small before inset |
+| 5 | Minimal Black | Black studio, hero after shot, two small chips |
 
-Paste each one into ChatGPT (image mode). Attach `logo/cleanwheels-logo.png` every time. If you have a photo of the finished car, attach it too (see the "with photo" line). These are the same prompts the Project will produce.
+Style 1 is the one you picked, so it is locked in `PROJECT_INSTRUCTIONS.md`. Styles 2-5 are kept as alternates; ask the project for "style 3" etc.
 
-### Sample 1: Classic Split
-
+## Shared setting block (used in every prompt)
 ```
-Create an Instagram post image, portrait 4:5 (1080x1350).
-
-Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: a photo of the finished, detailed Toyota Fortuner]. 
-If photo (2) is attached, use that exact car as the right-hand "AFTER" half and keep its colour, angle and surroundings. Create the left-hand "BEFORE" half as the SAME car, same angle, same lighting, but filthy. If no photo is attached, create both halves yourself.
-
-Layout: a perfect vertical split down the middle with a thin white divider line.
-LEFT (BEFORE): a white Toyota Fortuner, front three-quarter view, covered in road dust, mud splatter, water spots, dull paint, brown brake-dust on the wheels, grimy glass. Overcast, flat light.
-RIGHT (AFTER): the same Fortuner, same angle, deep mirror-gloss paint, sharp reflections, glossy black tyres, bright clean alloys, spotless glass. Brighter, crisp light.
-Setting: a quiet Adelaide suburban street, soft blurred background.
-
-Text (exact spelling, bold white Helvetica-style uppercase):
-- Top center: "REVIVE YOUR RIDE"
-- Below it, smaller: "MOBILE CAR DETAILING"
-- Bottom center: place the attached Cleanwheels logo exactly as provided, do not redraw it, about 28% of image width.
-Small corner tags: "BEFORE" bottom-left, "AFTER" bottom-right.
-No other text. Blur any licence plate. Photorealistic, high-end automotive photography, not cartoonish.
+SETTING: the car is parked at a premium private home, inside a modern covered carport / entrance courtyard: warm timber slat ceiling with thin black light strips, honed stone floor, a few clipped topiary plants in dark planters, a tall timber front door, soft golden natural light filtering through greenery. Calm, quiet, luxury architecture photography. Identical setting, camera angle and framing in both halves.
 ```
 
-### Sample 2: Diagonal + Van
-
+## Style 1: Classic Split (locked), example: Toyota Fortuner
 ```
-Create an Instagram post image, portrait 4:5 (1080x1350).
+Create an Instagram thumbnail image, vertical 9:16 (1080x1920).
 
-Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner]. If (2) is attached, use that exact car for the AFTER half and make the BEFORE half the same car, same angle, but dirty. Otherwise create both.
+Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: a photo of the finished, detailed Toyota Fortuner], (3) [OPTIONAL: a reference photo of the parking setting].
+If (2) is attached, use that exact car as the right-hand AFTER half, keeping its colour and body details, and place it in the setting. Recreate the SAME car, same angle, same lighting, but filthy, for the left-hand BEFORE half. If (2) is not attached, create both halves yourself. If (3) is attached, match its architecture and mood.
 
-Layout: one diagonal split from top-right to bottom-left. Upper-left triangle = BEFORE (dusty, muddy, dull Fortuner, grey overcast light). Lower-right triangle = AFTER (same Fortuner, mirror gloss, golden-hour light). Thin white diagonal divider.
-Behind the car, in a suburban Adelaide home driveway, a white detailing van with a blue "Cleanwheels" look (no readable text on the van except a tiny blue wordmark). The home and garage are blurred in the background, which shows we come to the customer's house.
+Layout: one perfect vertical split down the exact middle with a thin white divider line. The car sits in the central part of the frame (middle 60% of the height), front three-quarter view, with generous space above and below.
+LEFT (BEFORE): white Toyota Fortuner covered in road dust, mud splatter, water spots, dull paint, brown brake-dust wheels, grimy glass. Slightly flatter, cooler light.
+RIGHT (AFTER): the same Fortuner, mirror-gloss paint, sharp reflections, glossy black tyres, bright clean alloys, spotless glass. Slightly brighter, warmer light.
 
-Text (exact, bold white uppercase Helvetica-style):
-- Top: "WE COME TO YOU"
-- Under it, small: "MOBILE CAR DETAILING · ADELAIDE"
-- Bottom center: the attached logo, unchanged, about 25% width.
-Tags: "BEFORE" and "AFTER" small, blue pill shapes with white text.
-No other text. Blur any plate. Photorealistic.
-```
+SETTING: the car is parked at a premium private home, inside a modern covered carport / entrance courtyard: warm timber slat ceiling with thin black light strips, honed stone floor, a few clipped topiary plants in dark planters, a tall timber front door, soft golden natural light filtering through greenery. Calm, quiet, luxury architecture photography. Identical setting, camera angle and framing in both halves.
 
-### Sample 3: Stacked
-
-```
-Create an Instagram post image, portrait 4:5 (1080x1350).
-
-Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner]. If (2) is attached, use it for the AFTER panel and recreate the same car filthy for the BEFORE panel, same angle. Otherwise create both.
-
-Layout: two equal horizontal panels stacked, separated by a thin electric blue (#0A3CFF) line. TOP = BEFORE: Fortuner dusty, muddy, dull paint, dirty wheels. BOTTOM = AFTER: same car, same angle, mirror-gloss, spotless. Black background behind the panels with 40px margins.
-Large bold white uppercase Helvetica-style headline across the top margin: "TOYOTA FORTUNER".
-Panel chips: "BEFORE" on the top panel, "AFTER" on the bottom panel, white text in electric blue rounded chips.
-Bottom margin: the attached logo unchanged, about 25% width, centered.
-No other text. Blur plates. Photorealistic automotive photography.
+LOGO: place the attached Cleanwheels logo exactly as provided, never redraw or retype it, bottom-center, about 28% of the image width, on a soft dark gradient for legibility.
+NO other text of any kind: no headline, no labels, no BEFORE/AFTER words, no captions. Blur or blank the licence plate. Photorealistic, high-end automotive photography, not cartoonish.
 ```
 
-### Sample 4: Driveway Scene
-
+## Style 2: Diagonal
 ```
-Create an Instagram post image, portrait 4:5 (1080x1350).
-
-Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner]. If (2) is attached, the main car must be that exact Fortuner looking gleaming. Otherwise create one.
-
-Scene: full-bleed photo of a gleaming white Toyota Fortuner in the driveway of a modern Adelaide suburban home, late-afternoon sun, a white detailing van parked behind it, a detailer in dark overalls buffing the bonnet. Cinematic, shallow depth of field.
-Small inset at the top-left corner (rounded corners, white border): the same Fortuner BEFORE, dusty and muddy, labelled "BEFORE". Main image labelled "AFTER" small, bottom-left.
-Text (exact, bold white uppercase Helvetica-style): "DETAILED AT YOUR DOOR" near the top, with a smaller line below "MOBILE CAR DETAILING · ADELAIDE".
-Bottom center: the attached logo unchanged, about 25% width, on a subtle dark gradient for legibility.
-No other text. Blur plates. Photorealistic.
+Create an Instagram thumbnail image, vertical 9:16 (1080x1920). Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner], (3) [OPTIONAL: parking setting reference]. If (2) is attached, use that exact car for the AFTER part and recreate it filthy, same angle, for the BEFORE part; otherwise create both.
+Layout: one diagonal split from top-right to bottom-left with a thin white divider. Upper-left = BEFORE (dusty, muddy, dull, cooler light). Lower-right = AFTER (same car, mirror gloss, warm light). Car in the central 60% of the height.
+SETTING: [shared setting block above].
+LOGO: attached logo unchanged, bottom-center, about 28% width. NO other text. Blur plates. Photorealistic.
 ```
 
-### Sample 5: Minimal Black
-
+## Style 3: Stacked
 ```
-Create an Instagram post image, portrait 4:5 (1080x1350).
+Create an Instagram thumbnail image, vertical 9:16 (1080x1920). Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner], (3) [OPTIONAL: parking setting reference]. If (2) is attached use it for the AFTER panel and recreate it filthy for BEFORE, same angle; otherwise create both.
+Layout: two equal horizontal panels stacked in the central area, separated by a thin electric blue (#0A3CFF) line. TOP = BEFORE (dusty, muddy, dull). BOTTOM = AFTER (mirror gloss, spotless). Black margins above and below.
+SETTING: [shared setting block above] in both panels.
+LOGO: attached logo unchanged, bottom margin, centered, about 28% width. NO other text. Blur plates. Photorealistic.
+```
 
-Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner]. If (2) is attached, use that exact car for the AFTER chip and recreate it filthy for the BEFORE chip, same angle. Otherwise create both.
+## Style 4: Detailer at Work
+```
+Create an Instagram thumbnail image, vertical 9:16 (1080x1920). Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner], (3) [OPTIONAL: parking setting reference].
+Full-bleed photo of the gleaming Fortuner (use the attached photo's car if provided) in the premium home carport, a detailer in dark overalls buffing the bonnet, a white detailing van just visible outside, cinematic shallow depth of field. Small inset top-left with rounded corners and a thin white border showing the same Fortuner dusty and muddy (before), no label on it.
+SETTING: [shared setting block above].
+LOGO: attached logo unchanged, bottom-center, about 28% width, on a subtle dark gradient. NO other text. Blur plates. Photorealistic.
+```
 
-Layout: pure black (#000000) background. Huge bold white uppercase Helvetica-style text "FORTUNER" across the upper third, with "TOYOTA" small in electric blue (#0A3CFF) above it. Centre: a large hero image of the gleaming AFTER Fortuner, floating on black with soft blue rim light and a glossy floor reflection. Two small rounded photo chips bottom-left (BEFORE, dusty) and bottom-right (AFTER, gleaming), labelled in tiny white caps. A thin electric blue line separates content from the footer.
-Footer: the attached logo unchanged, about 25% width, centered, with "MOBILE CAR DETAILING · ADELAIDE" tiny in white beneath it.
-No other text. Blur plates. Premium, luxury, photorealistic.
+## Style 5: Minimal Black
+```
+Create an Instagram thumbnail image, vertical 9:16 (1080x1920). Attached: (1) the Cleanwheels logo, (2) [OPTIONAL: photo of the finished Toyota Fortuner].
+Pure black (#000000) background. Centre: a large hero image of the gleaming Fortuner (use the attached photo's car if provided) in the premium home carport, soft electric-blue rim light and a glossy floor reflection. Two small rounded photo chips below the hero, left = same car dusty (before), right = gleaming (after), no labels. Thin electric blue (#0A3CFF) line above the footer.
+LOGO: attached logo unchanged, bottom-center, about 28% width. NO other text. Blur plates. Premium, photorealistic.
 ```

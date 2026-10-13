@@ -26,11 +26,12 @@ Bold, tight, clean grotesk in the style of Helvetica Neue Bold / Inter Bold. Upp
 - Realistic, high-end automotive photography. Never cartoonish, never over-saturated.
 - Licence plates blurred or blank.
 
-## Copy rules
-- Spell **Adelaide** correctly (the reference used "ADEALIDE", which is wrong).
-- Headline max 4 words. One supporting line max.
-- Approved lines: "REVIVE YOUR RIDE", "WE COME TO YOU", "DETAILED AT YOUR DOOR", "BEFORE / AFTER", "MOBILE CAR DETAILING · ADELAIDE".
-- Car model can appear as a small tag (e.g. "TOYOTA FORTUNER").
+## Text rules
+- **No text on the thumbnail except the logo.** No headline, no BEFORE/AFTER tags, no taglines, no car model. The logo is the only lettering.
+- If ChatGPT adds any extra text, tell it to remove it.
+
+## Setting
+The car is always parked at a **premium private home**: a modern covered carport or entrance courtyard with timber slat ceiling, stone or polished concrete floor, warm natural light, greenery and a designer front door. This shows we detail the car at the customer's own house. Same setting in both halves.
 
 ## Format
-Instagram portrait **4:5, 1080 x 1350 px**. Keep key text inside the central safe area so the 1:1 grid crop still works.
+Instagram thumbnail / Reel cover, vertical **9:16, 1080 x 1920 px**. Keep the car and the split line inside the central safe area (about the middle 60% of the height) so the 3:4 and 1:1 grid crops still work. Logo sits bottom-center, above the bottom 12% of the frame.
