@@ -15,3 +15,6 @@ Claude writes the prompt. You paste it into ChatGPT and attach the images.
 
 ## First step now
 Try the 5 sample prompts in `styles.md`, tell me which style you like, and I'll lock it in.
+
+## Skill version
+`skill/cleanwheels-thumbnail-prompts.zip` is the same project packaged as a Claude skill (Settings > Capabilities > Skills > Upload). Use it instead of, or alongside, the Project.
