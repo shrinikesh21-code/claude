@@ -1,6 +1,6 @@
 ---
 name: cleanwheels-thumbnail-prompts
-description: Writes ready-to-paste ChatGPT image prompts for Cleanwheels (mobile car detailing) before/after Instagram thumbnails, 9:16, lime and royal blue brand, catchy header plus logo, car at a premium home. Use when the user gives a car model (optionally with a photo of the detailed car) and wants a thumbnail prompt. Never generates images itself.
+description: Writes ready-to-paste ChatGPT image prompts for Cleanwheels (mobile car detailing) before/after Instagram thumbnails, 9:16, dark "Blvck" filter look with lime accent, catchy header plus logo, car at a premium home at night. Use when the user gives a car model (optionally with a photo of the detailed car) and wants a thumbnail prompt. Never generates images itself.
 ---
 
 
@@ -26,11 +26,11 @@ Nothing else unless they ask for changes.
 - Format: Instagram thumbnail, vertical **9:16, 1080x1920**. Car stays in roughly the 28-80% band of the height.
 - **Text on the image = header + logo only.** Header is two lines: `DETAILING` (white, small) over the car name (lime #C8FF00, huge), uppercase, exact spelling, geometric bold sans. You may rotate the header format listed in `references/styles.md` if the user asks for variety. Always end the prompt with "NO other text of any kind".
 - Logo: attached lime wordmark, placed unchanged, never redrawn, retyped or recoloured, bottom-center, ~30% width.
-- Colour: blend the top and bottom of the photo into a royal blue (#0000A0) gradient behind the header and logo.
-- Setting: always a premium private home (modern covered carport / entrance courtyard, timber slat ceiling, stone floor, topiary, warm natural light), identical in both halves. Use the shared setting text in `references/styles.md`. If the user attaches a setting reference photo, tell ChatGPT to match it.
+- Look: always the dark "Blvck" filter (low-key, crushed blacks, desaturated, grain, vignette, rim light). Lime is the only saturated colour. Fade the top and bottom of the image into pure black behind the header and logo.
+- Setting: always a premium private home (modern covered carport / entrance courtyard, timber slat ceiling, stone floor, topiary) at night with softly glowing strip lights, identical in both halves. Use the shared setting text in `references/styles.md`. If the user attaches a setting reference photo, tell ChatGPT to match it.
 - **With a finished-car photo:** "Use the attached photo as the AFTER half, keep that exact car, colour and body details, and place it in the setting. Recreate the SAME car, same angle and lighting, filthy, for the BEFORE half."
 - **Without a photo:** write both halves yourself, same car, same angle, same lighting, only the condition differs.
-- BEFORE = dust, mud splatter, water spots, dull paint, brown brake-dust wheels, grimy glass, slightly flatter cooler light. AFTER = mirror-gloss paint, crisp reflections, glossy tyres, clean wheels, spotless glass, slightly brighter warmer light.
+- BEFORE = dust, mud splatter, water spots, dull paint, brown brake-dust wheels, grimy glass, flat and lifeless, even darker. AFTER = mirror-gloss paint, sharp specular highlights, rim light on every edge, glossy tyres, clean wheels, spotless glass. Both stay dark and moody.
 - Describe the car model accurately (body shape, grille, lights) so ChatGPT doesn't draw a generic car.
 - Blur licence plates. Photorealistic, high-end automotive photography, not cartoonish.
 - If the user's photo shows a car different from the model they typed, ask once which is right.
